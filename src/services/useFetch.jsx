@@ -9,22 +9,22 @@ const useFetch = (endPoint) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
 
-  useEffect(() => {
-    const getRequest = async () => {
-      try {
-        setIsLoading(true);
-        const {data} = await axios.get(`${url}/${endPoint}`);
-        setData(data);
-      } catch (error) {
-        console.error(error);
-        setIsError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const getRequest = async () => {
+    try {
+      setIsLoading(true);
+      const {data} = await axios.get(`${url}/${endPoint}`);
+      setData(data);
+    } catch (error) {
+      console.error(error);
+      setIsError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     getRequest();
-  }, [endPoint]);
+  }, []);
 
   return {data, isLoading, isError};
 };
