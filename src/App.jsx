@@ -7,9 +7,9 @@ import {
   createRoutesFromElements
 } from "react-router-dom";
 
-
 import Nav from './component/layout/Nav'
-import Shop from './page/shop'
+import BodyCare from './page/BodyCare';
+import HairLine from './page/HairLine';
 
 function Root() {
   return (
@@ -24,7 +24,8 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />} >
-        <Route path="shop" element={<Shop />} />
+        <Route path="Body Care" element={<BodyCare />} />
+        <Route path="Hair Line" element={<HairLine />} />
       </Route>
     )
   );

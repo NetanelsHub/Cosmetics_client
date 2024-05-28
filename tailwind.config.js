@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customGold: '#FFD700', // Define your custom gold color
+      },
+    },
   },
   plugins: [],
 }
