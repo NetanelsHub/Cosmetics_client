@@ -7,7 +7,9 @@ import { globalContext } from "../../utils/GlobalContext"
 const category_arr = ["Body Care","Hair Line","Kits","Makeup","Gold Performance","Nail Kit","Premium"]
 
 function Nav() {
+  // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // set the category name
   const {setCategoryName} = useContext(globalContext)
 
   const toggleMenu = () => {
@@ -56,7 +58,6 @@ function Nav() {
         >
           <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
             <ul className="flex ">
-
               <Li>
                 <Link to="/contact" className="hover:text-customGold">
                   <FaEnvelope size={30} />
