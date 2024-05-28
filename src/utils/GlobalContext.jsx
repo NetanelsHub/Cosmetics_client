@@ -4,11 +4,22 @@ import { createContext, useState, useEffect } from "react";
 export const globalContext = createContext()
 
 function GlobalProvider({ children }) {
-const [categoryName, setCategoryName] = useState("")
+
+  const [categoryName, setCategoryName] = useState("")
+  const [productsByCategory, setProductsByCategory] = useState(null)
+  const[selectedProduct,setSelectedProduct] = useState(null)
+
+  const [showModel, setShowModel] = useState(false)
 
   const value = {
     setCategoryName,
-    categoryName
+    categoryName,
+    productsByCategory,
+    setProductsByCategory,
+    showModel,
+    setShowModel,
+    selectedProduct,
+    setSelectedProduct
   }
 
   return (
