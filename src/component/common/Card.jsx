@@ -1,3 +1,5 @@
+// this is card + model for product by category
+
 import React, { useContext, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { globalContext } from "../../utils/GlobalContext";
@@ -24,8 +26,9 @@ export default function Card() {
     categoryName,
   } = useContext(globalContext);
 
-  console.log("what is it:", productsByCategory[categoryName]);
-  console.log("state:", productsByCategory);
+  // console.log("what is it:", productsByCategory[categoryName]);
+  // console.log("state:", productsByCategory);
+
   function openModel(product) {
     setShowModel(true);
     setSelectedProduct(product);
