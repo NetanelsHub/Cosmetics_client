@@ -9,7 +9,7 @@ export default function CategoryCard() {
   const { categoryName, setProductsByCategory, productsByCategory } =
     useContext(globalContext);
 
-  // isFetch - we checked if we already send request to the server
+  // isFetch - checked if we already send request to the server by this category product
   const isFetch = !productsByCategory[categoryName];
 
   //data.productsByCategory
@@ -21,11 +21,13 @@ export default function CategoryCard() {
           withCredentials: true,
         });
         if (!data) throw new Error("There is not Products");
+
         setProductsByCategory((prevDate) => ({
           ...prevDate,
           [categoryName]: data.productsByCategory,
         }));
-        console.log(productsByCategory);
+
+        // console.log(productsByCategory);
         // console.log(data)
       }
     } catch (error) {}
@@ -42,14 +44,4 @@ export default function CategoryCard() {
   );
 }
 
-//
-// async function getProductByCategory() {
-//   try {
-//     const { data } = await axios.get(`${url}?Search=${categoryName}`, {
-//       withCredentials: true,
-//     });
-//     if (!data) throw new Error("There is not Products");
-//     setProductsByCategory(data.productsByCategory);
-//     console.log(data);
-//   } catch (error) { }
-// }
+

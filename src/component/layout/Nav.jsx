@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Li from "../common/Li";
-import { FaShoppingCart, FaUser, FaEnvelope } from "react-icons/fa";
+import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
 import { globalContext } from "../../utils/GlobalContext";
 
 const category_arr = [
@@ -19,28 +19,14 @@ function Nav() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
   const { setCategoryName } = useContext(globalContext);
-  // navigate between category and home for each category
-  const [categoryClicks, setCategoryClicks] = useState({});
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   function handelGetProduct(categoryName) {
-    console.log("when i click on nav", categoryName);
     //  get the category name for server req
     setCategoryName(categoryName);
-
-    setCategoryClicks((prevClicks) => ({
-      // ...prevClicks - copy of the object and have key and value 
-      // the key is the category name and the value its true/false
-      ...prevClicks,
-      //  he check if the category name in the object prevClicks
-      // if its not he set the key as category name and its value to false
-      // if category name its already in the object prevClick he change 
-      // is value from true to false or from false to true 
-      [categoryName]: !prevClicks[categoryName],
-    }));
   }
 
   return (
@@ -71,12 +57,12 @@ function Nav() {
           </svg>
         </button>
         <div
-          className={`${
-            isMenuOpen ? "block" : "hidden"
-          } w-full md:block md:w-auto`}
+          className={`${isMenuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto`}
           id="navbar-default"
         >
           <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
+            {/* upper nav bar */}
             <ul className="flex ">
               <Li>
                 <Link to="/contact" className="hover:text-customGold">
@@ -95,20 +81,28 @@ function Nav() {
               </Li>
               <p>Total : 0 $</p>
             </ul>
+            {/* end upper nav bar */}
           </div>
+          {/* down nav bar  */}
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {/* <Li >
-              <Link to="home">Home</Link>
-            </Li> */}
             {category_arr.map((val, index) => (
               //  need to add loading
               <Li key={index} onClick={() => handelGetProduct(val)}>
-                <Link to={categoryClicks[val] ? "home" : "category"}>
+                <Link to="category">
                   {val}
                 </Link>
               </Li>
             ))}
           </ul>
+          {/* end down nav bar */}
+        </div>
+
+        {/* Right-side div for "cosmetic" text and home icon */}
+        <div className="flex items-center">
+          <p className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino">Cosmetic</p>
+          <Link to="/home" className="text-gray-600 dark:text-gray-400 hover:text-customGold">
+            <FaHome size={24} />
+          </Link>
         </div>
       </div>
     </nav>
