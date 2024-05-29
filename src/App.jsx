@@ -10,6 +10,7 @@ import {
 import Nav from "./component/layout/Nav";
 import CategoryCard from "./page/CategoryCard";
 import Home from "./page/Home";
+import ShoppingCart from "./page/ShoppingCart";
 
 function Root() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index  path="home" element={<Home />} />
         <Route path="category" element={<CategoryCard />} />
+        <Route path="shopping-cart" element={<ShoppingCart />} />
       </Route>
     )
   );
