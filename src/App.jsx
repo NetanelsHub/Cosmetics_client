@@ -1,14 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
   Route,
   Outlet,
-  createRoutesFromElements
+  createRoutesFromElements,
 } from "react-router-dom";
 
-import Nav from './component/layout/Nav'
-import CategoryCard from './page/CategoryCard';
+import Nav from "./component/layout/Nav";
+import CategoryCard from "./page/CategoryCard";
+import Home from "./page/Home";
 
 function Root() {
   return (
@@ -22,9 +23,9 @@ function Root() {
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Root />} >
+      <Route path="/" element={<Root />}>
+        <Route index  path="home" element={<Home />} />
         <Route path="category" element={<CategoryCard />} />
-
       </Route>
     )
   );
