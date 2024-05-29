@@ -6,7 +6,7 @@ export const globalContext = createContext()
 function GlobalProvider({ children }) {
 
   const [categoryName, setCategoryName] = useState("")
-  const [productsByCategory, setProductsByCategory] = useState(null)
+  const [productsByCategory, setProductsByCategory] = useState({})
   const[selectedProduct,setSelectedProduct] = useState(null)
 
   const [showModel, setShowModel] = useState(false)
