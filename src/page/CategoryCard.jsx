@@ -15,6 +15,7 @@ export default function CategoryCard() {
   //data.productsByCategory
 
   async function getProductByCategory() {
+    
     try {
       if (isFetch) {
         const { data } = await axios.get(`${url}?Search=${categoryName}`, {
