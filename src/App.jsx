@@ -25,7 +25,8 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
-        <Route index  path="home" element={<Home />} />
+        <Route index element={<Home />} />
+        <Route path="home" element={<Home />} />
         <Route path="category" element={<CategoryCard />} />
         <Route path="shopping-cart" element={<ShoppingCart />} />
       </Route>

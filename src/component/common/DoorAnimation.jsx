@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react'; // Using Headless UI for transit
 
 import pic from "../../assets/IMG_20180616_192553_251.jpg"
 
-function DoorAnimation  ()  {
+function DoorAnimation  ({children})  {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ function DoorAnimation  ()  {
   }, []);
 
   return (
-    <div className="relative w-full h-80 overflow-hidden">
+    <div className="relative w-100vh h-80vh overflow-hidden">
       <div className="absolute w-1/2 h-full transition-transform duration-1000"
         style={{ transform: isOpen ? 'translateX(-80\%)' : 'translateX(0)' }}>
         <img src={pic} alt="Left Half" className="w-full h-full object-cover" style={{ clipPath: 'inset(0 50% 0 0)' }} />
@@ -21,6 +21,7 @@ function DoorAnimation  ()  {
         style={{ transform: isOpen ? 'translateX(80%)' : 'translateX(0)' }}>
         <img src={pic} alt="Right Half" className="w-full h-full object-cover" style={{ clipPath: 'inset(0 0 0 50%)' }} />
       </div>
+      {children}
     </div>
   );
 };

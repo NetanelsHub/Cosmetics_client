@@ -1,10 +1,11 @@
-// this is card + model for product by category
+// this is card + model for product by category in navbar
 
 import React, { useContext, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 import { globalContext } from "../../utils/GlobalContext";
 import Model from "./Model";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { shoppingContext } from "../../utils/ShoppingContext";
 
 const spinnerStyles = {
   borderTopColor: "#3498db",
@@ -25,6 +26,8 @@ export default function Card() {
     setSelectedProduct,
     categoryName,
   } = useContext(globalContext);
+  const { shoppingList, setShoppingList, quantityProduct, setQuantityProduct } = useContext(shoppingContext)
+
 
   // console.log("what is it:", productsByCategory[categoryName]);
   // console.log("state:", productsByCategory);
@@ -38,10 +41,30 @@ export default function Card() {
     setSelectedProduct(null);
   }
 
+  //*** add to cart button
+  function handelAddToCart(product) {
+    /* logic : some : check if the product already in the shoppingList
+    if its not make a copy of product with quantity set to 1 and add it 
+    to shoppingList
+    */
+
+    const inList = shoppingList.some(val => val._id === product._id)
+    console.log(inList)
+
+    if (!inList){
+      const productAndQuantity = { ...product, quantity: 1 }
+      setShoppingList([...shoppingList, productAndQuantity])
+    }
+
+   
+
+
+  }
+
   return (
     <div className="flex flex-wrap justify-center">
       <p className="hover:text-customGold text-xl">
-        <Link to="/home"  className="fixed top-4 left-4 flex items-center hover:text-blue-500>back home"></Link>
+        <Link to="/home" className="fixed top-4 left-4 flex items-center hover:text-blue-500>back home"></Link>
       </p>
       {!productsByCategory[categoryName] ? (
         <div
@@ -75,8 +98,13 @@ export default function Card() {
                 <span className="text-3xl font-bold text-gray-900 dark:text-white">
                   ${product.product_price}
                 </span>
-                <button className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <button
+                  className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  onClick={() => handelAddToCart(product)}
+                >
                   Add to cart
+                  {/* need to get the product obj and insert it to array  */}
+
                 </button>
               </div>
             </div>

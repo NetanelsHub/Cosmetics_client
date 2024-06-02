@@ -1,15 +1,13 @@
-import { createContext, useState, useEffect } from "react";
-// import axios from "axios";
+import React, { createContext, useState, useEffect } from 'react';
+import ShoppingProvider from './ShoppingContext'; // Correct import statement
 
-export const globalContext = createContext()
+export const globalContext = createContext();
 
 function GlobalProvider({ children }) {
-
-  const [categoryName, setCategoryName] = useState("")
-  const [productsByCategory, setProductsByCategory] = useState({})
-  const[selectedProduct,setSelectedProduct] = useState(null)
-
-  const [showModel, setShowModel] = useState(false)
+  const [categoryName, setCategoryName] = useState('');
+  const [productsByCategory, setProductsByCategory] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [showModel, setShowModel] = useState(false);
 
   const value = {
     setCategoryName,
@@ -19,13 +17,16 @@ function GlobalProvider({ children }) {
     showModel,
     setShowModel,
     selectedProduct,
-    setSelectedProduct
-  }
+    setSelectedProduct,
+  };
 
   return (
     <globalContext.Provider value={value}>
-      {children}
+      <ShoppingProvider> 
+        {children}
+      </ShoppingProvider>
     </globalContext.Provider>
   );
 }
-export default GlobalProvider
+
+export default GlobalProvider;

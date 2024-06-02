@@ -18,7 +18,7 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName } = useContext(globalContext);
+  const { setCategoryName, setShowModel } = useContext(globalContext);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,6 +27,9 @@ function Nav() {
   function handelGetProduct(categoryName) {
     //  get the category name for server req
     setCategoryName(categoryName);
+  }
+  function handelShowModel(){
+    setShowModel(true)
   }
 
   return (
@@ -76,7 +79,7 @@ function Nav() {
               </Li>
               <Li>
                 <Link to="/shopping-cart" className="hover:text-customGold  ">
-                  <FaShoppingCart size={30} />
+                  <FaShoppingCart size={30} onClick={handelShowModel} />
                 </Link>
               </Li>
               <p>Total : 0 $</p>
