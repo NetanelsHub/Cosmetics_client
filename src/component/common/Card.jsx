@@ -26,18 +26,18 @@ export default function Card() {
     setSelectedProduct,
     categoryName,
   } = useContext(globalContext);
-  const { shoppingList, setShoppingList, quantityProduct, setQuantityProduct } = useContext(shoppingContext)
+  const { shoppingList, setShoppingList, showModelProduct,setShowModelProduct} = useContext(shoppingContext)
 
 
   // console.log("what is it:", productsByCategory[categoryName]);
   // console.log("state:", productsByCategory);
 
   function openModel(product) {
-    setShowModel(true);
+    setShowModelProduct(true);
     setSelectedProduct(product);
   }
   function handleCloseModel() {
-    setShowModel(false);
+    setShowModelProduct(false);
     setSelectedProduct(null);
   }
 
@@ -55,10 +55,6 @@ export default function Card() {
       const productAndQuantity = { ...product, quantity: 1 }
       setShoppingList([...shoppingList, productAndQuantity])
     }
-
-   
-
-
   }
 
   return (
@@ -111,8 +107,8 @@ export default function Card() {
           </div>
         ))
       )}
-      {showModel && selectedProduct && (
-        <Model onClick={handleCloseModel}>
+      {showModelProduct && selectedProduct && (
+        <Model onClick={handleCloseModel} show={showModelProduct}>
           <div className="flex items-center">
             <img
               className="w-40 h-40 object-contain "

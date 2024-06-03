@@ -4,14 +4,14 @@ import { globalContext } from '../utils/GlobalContext'
 import ShoppingProvider, { shoppingContext } from '../utils/ShoppingContext'
 
 export default function ShoppingCart() {
-  const { setShowModel } = useContext(globalContext)
+  // const { setShowModel } = useContext(globalContext)
 
-  const { shoppingList, setShoppingList} = useContext(shoppingContext)
+  const { shoppingList, setShoppingList ,showModelCart, setShowModelCart} = useContext(shoppingContext)
 
   
 
   function handlerClosModel() {
-    setShowModel(false)
+    setShowModelCart(false)
   }
 
   // - button
@@ -52,10 +52,10 @@ export default function ShoppingCart() {
   function handleClearCart() {
     setShoppingList([])
   }
-  console.log(shoppingList)
+
   return (
     <>
-      <Model onClick={handlerClosModel}>
+      <Model onClick={handlerClosModel} show={showModelCart}>
         {/* add card */}
         <div className='pt-6' style={{ maxHeight: '60vh', overflowY: 'auto' }}>
           {/* Header */}
