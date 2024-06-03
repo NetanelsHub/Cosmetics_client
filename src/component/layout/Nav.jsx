@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Li from "../common/Li";
 import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
 import { globalContext } from "../../utils/GlobalContext";
+import { shoppingContext } from "../../utils/ShoppingContext";
 
 const category_arr = [
   "Body Care",
@@ -18,7 +19,8 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName, setShowModel } = useContext(globalContext);
+  const { setCategoryName, setShowDropdownMenu } = useContext(globalContext);
+  const { showModelCart, setShowModelCart ,shoppingList } = useContext(shoppingContext)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,8 +30,13 @@ function Nav() {
     //  get the category name for server req
     setCategoryName(categoryName);
   }
-  function handelShowModel(){
-    setShowModel(true)
+  function handelShowModel() {
+    setShowModelCart(true)
+  }
+
+  function handelShowDroopDown() {
+    // show/unShow the side bar 
+    setShowDropdownMenu((prev) => !prev);
   }
 
   return (
@@ -72,17 +79,20 @@ function Nav() {
                   <FaEnvelope size={30} />
                 </Link>
               </Li>
-              <Li>
-                <Link to="/profile" className="hover:text-customGold">
-                  <FaUser size={30} />
-                </Link>
-              </Li>
+              {/* i need to be on every category this why i remove the link */}
+              <FaUser
+                size={30}
+                // open the side bar 
+                onClick={handelShowDroopDown}
+                className=" cursor-pointer hover:text-customGold"
+              />
               <Li>
                 <Link to="/shopping-cart" className="hover:text-customGold  ">
                   <FaShoppingCart size={30} onClick={handelShowModel} />
                 </Link>
               </Li>
-              <p>Total : 0 $</p>
+              
+              <p>Items: {shoppingList.length}</p>
             </ul>
             {/* end upper nav bar */}
           </div>

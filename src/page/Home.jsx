@@ -5,9 +5,9 @@ import DoorAnimation from '../component/common/DoorAnimation'
 export default function Home() {
   return (
     <>
-    <DoorAnimation>
+    {/* <DoorAnimation> */}
         <Carousel />
-    </DoorAnimation>
+    {/* </DoorAnimation> */}
   
     </>
   )

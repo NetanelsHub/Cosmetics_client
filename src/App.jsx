@@ -11,12 +11,19 @@ import Nav from "./component/layout/Nav";
 import CategoryCard from "./page/CategoryCard";
 import Home from "./page/Home";
 import ShoppingCart from "./page/ShoppingCart";
+import ProfileSideBar from "./component/layout/ProfileSideBar";
+import Form_Sign_Up_In from "./component/form/Form_Sign_Up_In";
 
 function Root() {
   return (
     <>
       <Nav />
-      <Outlet />
+      <div className="relative">
+        <Outlet />
+        <ProfileSideBar />
+        <Form_Sign_Up_In />
+      </div>
+
     </>
   );
 }

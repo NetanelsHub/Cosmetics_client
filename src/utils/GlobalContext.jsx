@@ -9,6 +9,16 @@ function GlobalProvider({ children }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [showModel, setShowModel] = useState(false);
 
+  // side bar for profile
+  /* when i click profile  --> login --> showModel -> form,
+  if i use in my show model and i am in category its will be open a
+  another show model of product info  to avoid it i need another show model state
+  */
+  const [showDropdownMenu ,setShowDropdownMenu ] = useState(false)
+  const [isLogIn,setIsLogIn] = useState(true)
+  // show model -  login form
+  const [showModelProfile,setShowModelProfile] = useState(false)
+
   const value = {
     setCategoryName,
     categoryName,
@@ -18,6 +28,12 @@ function GlobalProvider({ children }) {
     setShowModel,
     selectedProduct,
     setSelectedProduct,
+    showDropdownMenu ,
+    setShowDropdownMenu ,
+    isLogIn,
+    setIsLogIn,
+    showModelProfile,
+    setShowModelProfile
   };
 
   return (
