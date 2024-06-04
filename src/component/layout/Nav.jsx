@@ -19,8 +19,8 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName, setShowDropdownMenu } = useContext(globalContext);
-  const { showModelCart, setShowModelCart ,shoppingList } = useContext(shoppingContext)
+  const { setCategoryName, setShowDropdownMenu, clientName } = useContext(globalContext);
+  const { setShowModelCart, shoppingList } = useContext(shoppingContext)
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -71,8 +71,9 @@ function Nav() {
             } w-full md:block md:w-auto`}
           id="navbar-default"
         >
+          {/* upper nav bar */}
           <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
-            {/* upper nav bar */}
+            
             <ul className="flex ">
               <Li>
                 <Link to="/contact" className="hover:text-customGold">
@@ -80,22 +81,28 @@ function Nav() {
                 </Link>
               </Li>
               {/* i need to be on every category this why i remove the link */}
-              <FaUser
-                size={30}
-                // open the side bar 
-                onClick={handelShowDroopDown}
-                className=" cursor-pointer hover:text-customGold"
-              />
+              <Li>
+                <FaUser
+                  size={30}
+                  // open the side bar 
+                  onClick={handelShowDroopDown}
+                  className=" cursor-pointer hover:text-customGold"
+                />
+              </Li>
+
               <Li>
                 <Link to="/shopping-cart" className="hover:text-customGold  ">
                   <FaShoppingCart size={30} onClick={handelShowModel} />
                 </Link>
               </Li>
-              
-              <p>Items: {shoppingList.length}</p>
+                
+              <p> {shoppingList.length}</p>
+              <p className="pl-10">Hello {clientName ? clientName : "Guest"}. </p>
             </ul>
             {/* end upper nav bar */}
           </div>
+          {/* end upper nav bar */}
+
           {/* down nav bar  */}
           <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             {category_arr.map((val, index) => (
@@ -108,6 +115,7 @@ function Nav() {
             ))}
           </ul>
           {/* end down nav bar */}
+
         </div>
 
         {/* Right-side div for "cosmetic" text and home icon */}
