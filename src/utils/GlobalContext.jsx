@@ -15,9 +15,15 @@ function GlobalProvider({ children }) {
   another show model of product info  to avoid it i need another show model state
   */
   const [showDropdownMenu ,setShowDropdownMenu ] = useState(false)
+
+  // to know if client on login if its false == on register
   const [isLogIn,setIsLogIn] = useState(true)
+
   // show model -  login form
   const [showModelProfile,setShowModelProfile] = useState(false)
+
+ // set client name to show it on upper nav bar
+const[clientName,setClientName] = useState(null)
 
   const value = {
     setCategoryName,
@@ -33,7 +39,9 @@ function GlobalProvider({ children }) {
     isLogIn,
     setIsLogIn,
     showModelProfile,
-    setShowModelProfile
+    setShowModelProfile,
+    clientName,
+    setClientName
   };
 
   return (
