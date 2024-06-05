@@ -12,7 +12,9 @@ function ShoppingProvider({ children }) {
     const [showModelCart, setShowModelCart] = useState(false)
    // set the total price of product
    const[totalPrice,setTotalPrice] = useState(0)
-
+   // set all purchase - purchase page 
+   const[purchaseOrderInfo,setPurchaseOrderInfo] = useState({})
+   
     const value = {
         shoppingList,
         setShoppingList,
@@ -21,7 +23,9 @@ function ShoppingProvider({ children }) {
         showModelCart,
         setShowModelCart,
         totalPrice,
-        setTotalPrice
+        setTotalPrice,
+        purchaseOrderInfo,
+        setPurchaseOrderInfo
 
 
     }

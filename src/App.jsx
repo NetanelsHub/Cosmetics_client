@@ -16,6 +16,7 @@ import Form_Sign_Up_In from "./component/form/Form_Sign_Up_In";
 import CategoryCard from "./page/CategoryCard";
 import Home from "./page/Home";
 import ShoppingCart from "./page/ShoppingCart";
+import Purchase from "./page/Purchase";
 import Payment from "./page/Payment";
 
 
@@ -43,7 +44,8 @@ function App() {
         <Route path="home" element={<Home />} />
         <Route path="category" element={<CategoryCard />} />
         <Route path="shopping-cart" element={<ShoppingCart />} />
-        <Route path="payment" element={<Payment />} />
+        <Route path="purchase" element={<Purchase />} />
+        <Route path="purchase/payment" element={<Payment />} />
       </Route>
     )
   );
