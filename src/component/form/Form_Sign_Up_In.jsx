@@ -1,4 +1,4 @@
-import React, { useContext,useState } from "react";
+import React, { useContext, useState } from "react";
 import Model from "../common/Model";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
@@ -18,7 +18,8 @@ const initialValues = {
 const url = "http://localhost:3000/client";
 
 export default function Form_Sign_Up_In() {
-    const { showModelProfile, setShowModelProfile, setIsLogIn, isLogIn, setClientName } = useContext(globalContext)
+    const { showModelProfile, setShowModelProfile, setIsLogIn, isLogIn, setClientName, 
+        setClientInfo } = useContext(globalContext)
 
     const objectSchema = Yup.object({
         client_email: Yup.string()
@@ -57,11 +58,11 @@ export default function Form_Sign_Up_In() {
                 const { data } = await axios.post(`${url}/login`, values, {
                     withCredentials: true,
                 });
-                console.log(data)
+                console.log("clint info : "  , data)
                 if (!data.success) throw new Error("don't success to login");
                 // need to add  to stat client name to show it on upper nav bar
                 setClientName(data.client.client_fName + " " + data.client.client_lName)
-
+                setClientInfo(data.client)
             } catch (error) {
                 // console.error("Error logging in:", error);
                 console.log("Error logging in:");
@@ -109,15 +110,15 @@ export default function Form_Sign_Up_In() {
                     {/* {console.log("isLogin:" , isLogIn)} */}
                     {!isLogIn && (
                         <>
-                            <FieldMy name={"client_fName"} placeholder={"*First Name"}  />
+                            <FieldMy name={"client_fName"} placeholder={"*First Name"} />
                             <FieldMy name={"client_lName"} placeholder={"*Last Name"} />
                         </>
                     )}
 
                     <FieldMy name={"client_email"} placeholder={"*Email"} type={"email"} />
-                    
+
                     <FieldMy name={"client_password"} placeholder={"*Password"} type={"password"} />
-                   
+
 
                     <div className="mb-5">
                         <a
@@ -127,6 +128,16 @@ export default function Form_Sign_Up_In() {
                             Forgot password?
                         </a>
                     </div>
+                    {isLogIn &&
+                        <div className="mb-5">
+                            <button
+                                className="block text-sm text-gray-900 dark:text-white mb-2  hover:bg-customGold"
+                                onClick={() => { setIsLogIn(false) }}
+                            >
+                                For register click here.
+                            </button>
+                        </div>
+                    }
                     <button
                         className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-customGold dark:focus:ring-blue-800"
                         type="submit"

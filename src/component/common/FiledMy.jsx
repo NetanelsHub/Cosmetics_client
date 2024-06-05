@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import React from "react";
+import {  Field, ErrorMessage } from "formik";
 
 
-export default function FieldMy({ name, placeholder, type }) {
+export default function FieldMy({ name, placeholder, type , readOnly = false }) {
  
   
   return (
@@ -12,7 +12,13 @@ export default function FieldMy({ name, placeholder, type }) {
         type={type}
         id={name}
         name={`${name}`}
-        className="border-b border-black  dark:text-white dark:border-white p-2"
+
+        // disabled={readOnly}
+        className={`border-b border-black p-2 ${
+          readOnly ? "bg-gray-200 text-gray-900" : "dark:text-white dark:border-white"
+        }`}
+
+        readOnly = {readOnly && readOnly}
 
         placeholder={placeholder}
         required
