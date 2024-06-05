@@ -1,174 +1,80 @@
-import React, { useContext } from "react";
-import { Formik, Field, ErrorMessage, Form } from "formik";
-import * as Yup from "yup";
-import "react-phone-input-2/lib/style.css";
-import PhoneInput from "react-phone-input-2";
-import FieldMy from "../component/common/FiledMy";
-import { globalContext } from "../utils/GlobalContext";
-import { shoppingContext } from "../utils/ShoppingContext";
-import axios from "axios";
-import Paypal, { onApprove } from "../component/common/Paypal";
+import React, { useContext, useState } from 'react';
+import { shoppingContext } from '../utils/ShoppingContext';
+import { FiPlus, FiMinus } from 'react-icons/fi';
+import Paypal from "../component/common/Paypal"
 
-const url = "http://localhost:3000/orders";
+export default function Payment() {
+    const { purchaseOrderInfo, shoppingList } = useContext(shoppingContext);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const tax = (purchaseOrderInfo.total_price * 0.17).toFixed(2);
 
-const validationSchema = Yup.object({
-  client_phone: Yup.string().required("Phone number is required"),
-  client_address: Yup.object({
-    city: Yup.string().required("City is required"),
-    street: Yup.string().required("Street is required"),
-    building: Yup.string().required("Building is required"),
-    apartment: Yup.string().required("Apartment is required"),
-  }),
-});
-
-export default function OrderForm() {
-  const { clientInfo } = useContext(globalContext);
-  const { shoppingList, totalPrice } = useContext(shoppingContext);
-  console.log(shoppingList);
-  console.log(clientInfo);
-
-  const initialValues = {
-    client_fName: clientInfo.client_fName,
-    client_lName: clientInfo.client_lName,
-    client_email: clientInfo.client_email,
-    total_price: totalPrice,
-    client_phone: "",
-    client_address: {
-      city: "",
-      street: "",
-      building: "",
-      apartment: "",
-    },
-  };
-  const isPayed = onApprove();
-  console.log("ispaid:",isPayed.status)
-
-  async function handleSubmitOrder(values) {
-    // console.log("hi ", values)
-    // this what i need to send to server
-    const order = {
-      clientId: clientInfo._id, // Replace with actual client ID
-      client_details: {
-        client_phone: values.client_phone,
-        client_address: {
-          city: values.client_address.city,
-          street: values.client_address.street,
-          building: values.client_address.building,
-          apartment: values.client_address.apartment,
-        },
-      },
-      total_price: totalPrice,
-      products: shoppingList.map((val) => ({
-        productId: val._id,
-        RTP: val.product_price,
-        quantity: val.quantity,
-      })),
-      // products: shoppingList,
-      status: 1,
+    const toggleExpand = () => {
+        setIsExpanded(!isExpanded);
     };
-    console.log(order);
 
-    //     try {
-    //       const { data } = await axios.post(`${url}/addOrder`, order, {
-    //         withCredentials: true,
-    //       });
-    //       // return data
-    //     } catch (error) {
-    //       // console.error("An error occurred while adding the product:", error);
-    //     }
-  }
+    return (
+        <div className="pt-4 pl-10 flex flex-col w-full bg-gray-100 min-h-screen">
+            <h1 className="text-center mb-4 text-2xl font-bold text-customGold">Cash Register</h1>
+            <div className="flex flex-wrap">
+                {/* Left Side - Bill */}
+                <div className="w-full lg:w-1/2 p-6 border border-gray-300 rounded-lg shadow-md bg-white">
+                    <div className="flex justify-between mb-2">
+                        <h1 className="text-lg font-semibold text-gray-800">Total payment:</h1>
+                        <span className="text-lg font-semibold text-gray-800">${purchaseOrderInfo.total_price.toFixed(2)}</span>
+                    </div>
+                    <h2 className="text-md font-medium mb-1 text-gray-700">Subtotal</h2>
 
-  return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-2xl p-6 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
-        <h2 className="mb-4 text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white ">
-          Total price: {initialValues.total_price} $
-        </h2>
-
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmitOrder}
-        >
-          {/* {({ values, setFieldValue }) => ( */}
-          <Form className="space-y-4">
-            <div className="flex flex-col md:flex-row md:space-x-4">
-              <div className="flex-1 space-y-4">
-                <FieldMy
-                  name="client_fName"
-                  type="text"
-                  placeholder="*First Name"
-                  readOnly
-                />
-                <FieldMy
-                  name="client_lName"
-                  type="text"
-                  placeholder="*Last Name"
-                  readOnly
-                />
-                <FieldMy
-                  name="client_email"
-                  type="email"
-                  placeholder="*Email"
-                  readOnly
-                />
-                <FieldMy
-                  name="client_phone"
-                  type="phone"
-                  placeholder="*phone"
-                />
-                <div className="mb-5">
-                  {/* <PhoneInput
-                      country={"il"}
-                //    value={values.client_phone}
-                      onChange={(phone) => setFieldValue("client_phone", phone)}
-                      inputProps={{
-                        name: "client_phone",
-                        required: true,
-                        className: "pl-9 border-b border-black p-2 dark:text-white dark:border-white",
-                      }}
-                    />
-                    <ErrorMessage
-                      className="text-red-600 text-sm"
-                      name="client_phone"
-                      component="div"
-                    /> */}
+                    <div className="flex justify-between items-center cursor-pointer text-gray-700 mb-2" onClick={toggleExpand}>
+                        <h2 className="text-md font-medium">Order details</h2>
+                        {isExpanded ? <FiMinus className="text-customGold" /> : <FiPlus className="text-customGold" />}
+                    </div>
+                    {isExpanded && (
+                        <div className="mt-2 text-gray-600">
+                            {shoppingList.map((val, index) => (
+                                <div key={index} className="flex items-center mb-4">
+                                    <img
+                                        className="w-20 h-20 object-contain"
+                                        src={val?.product_image}
+                                        alt={val?.product_name}
+                                    />
+                                    <div className="flex flex-col ml-4">
+                                        <h2 className="text-s font-bold text-customGold">
+                                            {val?.product_name}
+                                        </h2>
+                                        <span className="text-s font-bold">
+                                            price: ${val?.product_price}
+                                        </span>
+                                        <span className="text-s font-bold">
+                                            quantity: {val.quantity}
+                                        </span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                    <div className="flex justify-between mt-2 text-gray-700">
+                        <h3 className="text-md">Price:</h3>
+                        <span>${(purchaseOrderInfo.total_price - tax).toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-700">
+                        <h3 className="text-md">Tax:</h3>
+                        <span>${tax}</span>
+                    </div>
+                    <div className="flex justify-between mt-2 text-gray-800 font-semibold">
+                        <h3 className="text-md">Total:</h3>
+                        <span>${purchaseOrderInfo.total_price.toFixed(2)}</span>
+                    </div>
                 </div>
-              </div>
-              <div className="flex-1 space-y-4">
-                <FieldMy
-                  name="client_address.city"
-                  type="text"
-                  placeholder="*City"
-                />
-                <FieldMy
-                  name="client_address.street"
-                  type="text"
-                  placeholder="*Street"
-                />
-                <FieldMy
-                  name="client_address.building"
-                  type="text"
-                  placeholder="*Building"
-                />
-                <FieldMy
-                  name="client_address.apartment"
-                  type="text"
-                  placeholder="*Apartment"
-                />
-              </div>
+
+                {/* Right Side */}
+                <div className="w-full lg:w-1/2 p-6 border border-gray-300 rounded-lg shadow-md bg-white">
+                    <div className="flex justify-between">
+                        <h1 className="text-lg font-semibold text-gray-800">LET'S CHECKOUT</h1>
+                        <Paypal/>
+                    </div>
+                    {/* Add future content here */}
+                </div>
             </div>
-            <button
-              type="submit"
-              className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            >
-              Submit Order
-            </button>
-          </Form>
-          {/* )} */}
-        </Formik>
-        <Paypal />
-      </div>
-    </section>
-  );
+        </div>
+    );
 }

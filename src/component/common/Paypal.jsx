@@ -1,8 +1,11 @@
 import React from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
+import { shoppingContext } from "../../utils/ShoppingContext";
 
 function Paypal() {
+  const { purchaseOrderInfo } = useContext(shoppingContext);
+  
   const createOrder = async (data) => {
     // Order is created on the server and the order id is returned
     const response = await axios({

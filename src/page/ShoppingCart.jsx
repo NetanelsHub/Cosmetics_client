@@ -68,7 +68,7 @@ export default function ShoppingCart() {
         
         if(data.success){
           console.log(" valid user")
-          navigate("/payment")
+          navigate("/purchase")
         }
        
         // console.log(show, "token");
