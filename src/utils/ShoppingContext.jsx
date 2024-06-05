@@ -10,7 +10,8 @@ function ShoppingProvider({ children }) {
     const [showModelProduct, setShowModelProduct] = useState(false)
     // show the model - shopping cart
     const [showModelCart, setShowModelCart] = useState(false)
-
+   // set the total price of product
+   const[totalPrice,setTotalPrice] = useState(0)
 
     const value = {
         shoppingList,
@@ -18,7 +19,9 @@ function ShoppingProvider({ children }) {
         showModelProduct,
         setShowModelProduct,
         showModelCart,
-        setShowModelCart
+        setShowModelCart,
+        totalPrice,
+        setTotalPrice
 
 
     }

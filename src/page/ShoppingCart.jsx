@@ -1,14 +1,19 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState ,useEffect} from 'react'
 import Model from '../component/common/Model'
 import { globalContext } from '../utils/GlobalContext'
-import ShoppingProvider, { shoppingContext } from '../utils/ShoppingContext'
+import  { shoppingContext } from '../utils/ShoppingContext'
+import axios from "axios";
+import {useNavigate}  from "react-router-dom"
+
+const url = "http://localhost:3000/client";
 
 export default function ShoppingCart() {
   // const { setShowModel } = useContext(globalContext)
 
-  const { shoppingList, setShoppingList ,showModelCart, setShowModelCart} = useContext(shoppingContext)
-
-  
+  const { shoppingList, setShoppingList, showModelCart, setShowModelCart, totalPrice,
+    setTotalPrice } = useContext(shoppingContext)
+  const {setShowModelProfile,setIsLogIn} = useContext( globalContext )
+  const navigate  = useNavigate()
 
   function handlerClosModel() {
     setShowModelCart(false)
@@ -20,11 +25,11 @@ export default function ShoppingCart() {
     const item = updatedList[index]
     item.quantity -= 1
 
-    if (item.quantity < 1){
+    if (item.quantity < 1) {
       // its its quantity 0 remove it from the list
       onDelete(index)
     }
-    else{
+    else {
       setShoppingList(updatedList)
     }
 
@@ -33,7 +38,7 @@ export default function ShoppingCart() {
   function onIncrease(index) {
     // Create a copy of the shoppingList array
     const updatedList = [...shoppingList]
-     // Get the item at the specified index
+    // Get the item at the specified index
     const item = updatedList[index]
     // Increment the quantity of the item (its a reference of updatedList )
     item.quantity += 1
@@ -53,6 +58,38 @@ export default function ShoppingCart() {
     setShoppingList([])
   }
 
+  
+  
+    async function handelCheckOut() {
+      try {
+        const { data } = await axios.get(`${url}/auth`, {
+          withCredentials: true,
+        });
+        
+        if(data.success){
+          console.log(" valid user")
+          navigate("/payment")
+        }
+       
+        // console.log(show, "token");
+      } catch (error) {
+        console.log("un valid user")
+        //  to see only the login 
+        setIsLogIn(true)
+        setShowModelProfile(true)
+      }
+    }
+
+  
+
+    
+   useEffect(() => {
+    // the total price calculate
+    const total = shoppingList.reduce((sum, val) => sum + (val.product_price * val.quantity), 0)
+    setTotalPrice(total)
+    
+   }, [shoppingList]); //  only when i got  change in shopping list -  rerender
+ 
   return (
     <>
       <Model onClick={handlerClosModel} show={showModelCart}>
@@ -62,12 +99,14 @@ export default function ShoppingCart() {
           <div className='flex justify-between items-center mb-4'>
             <div className='flex items-center space-x-2'>
               <span>Items: {shoppingList.length}</span>
-              <span >Total Price: {shoppingList.reduce((sum,val) => sum + (val.product_price * val.quantity ),0 )} $ </span>
+              {/* <span >Total Price: { shoppingList.reduce((sum, val) => sum + (val.product_price * val.quantity), 0)} $ </span> */}
+              <span >Total Price: {totalPrice} $ </span>
             </div>
             <button onClick={handleClearCart} className='text-red-500'>Clear cart</button>
           </div>
+          {/* loop on shoppingList card */}
           {shoppingList.length > 0 ? shoppingList.map((val, index) => (
-            //  card
+
             <div key={index} className="border rounded-lg p-2 flex items-center space-x-4">
               <img
                 className="w-20 h-20 object-contain"
@@ -88,11 +127,27 @@ export default function ShoppingCart() {
                 </div>
                 <button onClick={() => onDelete(index)} className="text-red-500 mt-2">Delete</button>
               </div>
-            </div>
-          )) :
 
-            (<p>Shopping cart is empty.</p>)}
+
+
+            </div>
+
+          )
+
+          ) :
+
+            (<p>Shopping cart is empty.</p>)
+
+          }
         </div>
+        <button
+          className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          onClick={ handelCheckOut}
+        >
+          Check out
+
+
+        </button>
       </Model>
     </>
   )
