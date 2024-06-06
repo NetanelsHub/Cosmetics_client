@@ -6,7 +6,7 @@ import GlobalProvider from "./utils/GlobalContext.jsx"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_CLIENT_PAYPAL_ID, intent: "capture", currency: "USD" }}>
+  <PayPalScriptProvider options={{ clientId: import.meta.env.VITE_CLIENT_PAYPAL_ID, intent: "capture", currency: "ILS" }}>
     <GlobalProvider>
       <App />
     </GlobalProvider>
