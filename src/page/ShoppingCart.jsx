@@ -102,7 +102,7 @@ export default function ShoppingCart() {
               {/* <span >Total Price: { shoppingList.reduce((sum, val) => sum + (val.product_price * val.quantity), 0)} $ </span> */}
               <span >Total Price: {totalPrice} $ </span>
             </div>
-           {shoppingList.length > 1 && <button onClick={handleClearCart} className='text-red-500'>Clear cart</button> }
+           {shoppingList.length > 0 && <button onClick={handleClearCart} className='text-red-500'>Clear cart</button> }
           </div>
           {/* loop on shoppingList card */}
           {shoppingList.length > 0 ? shoppingList.map((val, index) => (
@@ -133,7 +133,7 @@ export default function ShoppingCart() {
             (<p>Shopping cart is empty.</p>)
           }
         </div>
-        {shoppingList.length > 1 && <button
+        {shoppingList.length > 0 && <button
           className="mt-4 text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           onClick={ handelCheckOut}
         >
