@@ -7,7 +7,8 @@ import DiscountWatermark from "./DiscountMark";
 import { shoppingContext } from "../../utils/ShoppingContext";
 
 
-const url = "http://localhost:3000/products/getAllProducts";
+// const url = "http://localhost:3000/products/getAllProducts";
+const url = "http://localhost:3000/products/discounted";
 
 export default function Carousel() {
   // set all product from server with discount 
@@ -22,7 +23,7 @@ export default function Carousel() {
       const { data } = await axios.get(url, {
         withCredentials: true,
       });
-
+      console.log("data:",data)
       if (!data || !data.products) throw new Error("There are no products");
 
       setDiscountProducts(data.products);
@@ -36,6 +37,7 @@ export default function Carousel() {
     getProductByDiscount();
   }, []);
 
+// only for check
   useEffect(() => {
     console.log("Discount Products:", discountProducts);
   }, [discountProducts]);
@@ -100,7 +102,8 @@ export default function Carousel() {
             className="relative flex flex-col items-center justify-center p-4"
           >
             <div className="relative flex items-center justify-center w-full h-40">
-              <DiscountWatermark discount={20} />
+              {/* val.discount */}
+              <DiscountWatermark discount={product.product_discount} />
               <img
                 className="w-40 h-40 object-contain"
                 src={product.product_image}
@@ -113,7 +116,7 @@ export default function Carousel() {
             </h3>
             <div className="flex justify-center items-center gap-10 m-4">
               <span className="text-center text-gray-600">
-                  {Math.round(product.product_price * 0.8)} $
+                  {product.product_price} $
               </span>
               <button 
               className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-customGold dark:focus:ring-blue-800"
