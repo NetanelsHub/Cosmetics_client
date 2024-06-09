@@ -15,10 +15,11 @@ export default function CategoryCard() {
   //data.productsByCategory
 
   async function getProductByCategory() {
-    
+   
     try {
       if (isFetch) {
-        const { data } = await axios.get(`${url}?Search=${categoryName}`, {
+
+        const { data } = await axios.get(`${url}?Search=${categoryName? categoryName: localStorage.getItem("category") }`, {
           withCredentials: true,
         });
         if (!data) throw new Error("There is not Products");
@@ -27,7 +28,10 @@ export default function CategoryCard() {
           ...prevDate,
           [categoryName]: data.productsByCategory,
         }));
-
+        
+       if (categoryName){
+       localStorage.setItem("category",categoryName)}
+        
         // console.log(productsByCategory);
         // console.log(data)
       }
@@ -36,6 +40,8 @@ export default function CategoryCard() {
 
   useEffect(() => {
     getProductByCategory();
+    localStorage.setItem("category",categoryName)
+
   }, [categoryName]);
 
   return (
