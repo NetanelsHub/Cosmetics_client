@@ -97,13 +97,13 @@ export default function Form_Sign_Up_In() {
     }
 
     return (
-        <Model onClick={handleClosModel} show={showModelProfile}>
+        <Model onClick={handleClosModel} show={showModelProfile} >
             <Formik
                 initialValues={initialValues}
                 validationSchema={objectSchema}
                 onSubmit={isLogIn ? handelLoginSubmit : handelRegisterSubmit}
             >
-                <Form className="w-auto h-auto mx-auto">
+                <Form className="w-auto h-auto mx-auto  ">
                     <h2 className="text-xl font-bold dark:text-white p-1 ">
                         {isLogIn ? "Log in" : "Register"}
                     </h2>
