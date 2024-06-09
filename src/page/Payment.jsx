@@ -60,6 +60,7 @@ export default function Payment() {
                         <h3 className="text-md">Tax:</h3>
                         <span>${tax}</span>
                     </div>
+                    <hr className="my-4 border-t border-gray-300" />
                     <div className="flex justify-between mt-2 text-gray-800 font-semibold">
                         <h3 className="text-md">Total:</h3>
                         <span>${purchaseOrderInfo.total_price.toFixed(2)}</span>

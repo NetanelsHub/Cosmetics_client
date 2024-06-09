@@ -89,11 +89,12 @@ function Nav() {
                   className=" cursor-pointer hover:text-customGold"
                 />
               </Li>
-
-              <Li>
-                <Link to="/shopping-cart" className="hover:text-customGold  ">
-                  <FaShoppingCart size={30} onClick={handelShowModel} />
-                </Link>
+               <Li>
+                  <FaShoppingCart 
+                  size={30} 
+                  onClick={handelShowModel}
+                  className="hover:text-customGold "
+                   />
               </Li>
                 
               <p> {shoppingList.length}</p>

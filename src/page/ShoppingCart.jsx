@@ -12,7 +12,9 @@ export default function ShoppingCart() {
 
   const { shoppingList, setShoppingList, showModelCart, setShowModelCart, totalPrice,
     setTotalPrice } = useContext(shoppingContext)
+
   const {setShowModelProfile,setIsLogIn} = useContext( globalContext )
+
   const navigate  = useNavigate()
 
   function handlerClosModel() {
@@ -68,6 +70,7 @@ export default function ShoppingCart() {
         
         if(data.success){
           console.log(" valid user")
+          setShowModelCart(false)
           navigate("/purchase")
         }
        
@@ -76,7 +79,9 @@ export default function ShoppingCart() {
         console.log("un valid user")
         //  to see only the login 
         setIsLogIn(true)
+      
         setShowModelProfile(true)
+      
       }
     }
 
