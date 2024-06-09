@@ -28,7 +28,7 @@ export default function ShoppingCart() {
     item.quantity -= 1
 
     if (item.quantity < 1) {
-      // its its quantity 0 remove it from the list
+      // if its quantity 0 remove it from the list
       onDelete(index)
     }
     else {
@@ -92,6 +92,10 @@ export default function ShoppingCart() {
     // the total price calculate
     const total = shoppingList.reduce((sum, val) => sum + (val.product_price * val.quantity), 0)
     setTotalPrice(total)
+
+    // every  time the shoppingList its change i add it to local storage
+    // localStorage.setItem("shoppingList" ,JSON.stringify(shoppingList))
+
     
    }, [shoppingList]); //  only when i got  change in shopping list -  rerender
  
@@ -110,6 +114,8 @@ export default function ShoppingCart() {
            {shoppingList.length > 0 && <button onClick={handleClearCart} className='text-red-500'>Clear cart</button> }
           </div>
           {/* loop on shoppingList card */}
+          {/* if user refresh or click on x  i need to get is shopping list  from local storage  */}
+
           {shoppingList.length > 0 ? shoppingList.map((val, index) => (
 
             <div key={index} className="border rounded-lg p-2 flex items-center space-x-4">

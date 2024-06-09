@@ -17,8 +17,9 @@ export default function CategoryCard() {
   async function getProductByCategory() {
    
     try {
-      if (isFetch) {
 
+      if (isFetch) {
+        console.log("categoryName:" , categoryName)
         const { data } = await axios.get(`${url}?Search=${categoryName? categoryName: localStorage.getItem("category") }`, {
           withCredentials: true,
         });
@@ -29,18 +30,27 @@ export default function CategoryCard() {
           [categoryName]: data.productsByCategory,
         }));
         
+        /* 
+        problem : after we do refresh the categoryName its null.!
+        solution :to avoid it on the 1st time when categoryName its not null
+        we insert the categoryName inside the local storage  than when user 
+        refresh its will take the categoryName from local storage
+        and want change the local storage any more because  the category name 
+        is null
+         */
        if (categoryName){
        localStorage.setItem("category",categoryName)}
         
-        // console.log(productsByCategory);
-        // console.log(data)
       }
-    } catch (error) {}
+    } catch (error) {
+      
+    }
+   
   }
 
   useEffect(() => {
     getProductByCategory();
-    localStorage.setItem("category",categoryName)
+    // localStorage.setItem("category",categoryName)
 
   }, [categoryName]);
 

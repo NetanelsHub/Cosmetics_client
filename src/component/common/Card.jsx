@@ -1,7 +1,7 @@
 // this is card + model for product by category in navbar
 
 import React, { useContext, useEffect } from "react";
-import { FaSearch,FaSpinner } from "react-icons/fa";
+import { FaSearch, FaSpinner } from "react-icons/fa";
 import { globalContext } from "../../utils/GlobalContext";
 import Model from "./Model";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ export default function Card() {
     setSelectedProduct,
     categoryName,
   } = useContext(globalContext);
-  const { shoppingList, setShoppingList, showModelProduct,setShowModelProduct} = useContext(shoppingContext)
+  const { shoppingList, setShoppingList, showModelProduct, setShowModelProduct } = useContext(shoppingContext)
 
 
   // console.log("what is it:", productsByCategory[categoryName]);
@@ -42,19 +42,21 @@ export default function Card() {
   }
 
   //*** add to cart button
-  function handelAddToCart(product,index) {
+  function handelAddToCart(product, index) {
     /* logic : some : check if the product already in the shoppingList
     if its not make a copy of product with quantity set to 1 and add it 
     to shoppingList
     */
+    
 
     const inList = shoppingList.some(val => val._id === product._id)
     console.log(inList)
 
-    if (!inList){
+
+    if (!inList) {
       const productAndQuantity = { ...product, quantity: 1 }
       setShoppingList([...shoppingList, productAndQuantity])
-    }else{
+    } else {
       // if product  already in the list update is quantity
       const updatedList = [...shoppingList]
       // Get the item at the specified index
@@ -62,7 +64,7 @@ export default function Card() {
       // Increment the quantity of the item (its a reference of updatedList )
       item.quantity += 1
       // Update the shoppingList state with the modified array
-      setShoppingList(updatedList) 
+      setShoppingList(updatedList)
     }
   }
 
@@ -72,11 +74,11 @@ export default function Card() {
         <Link to="/home" className="fixed top-4 left-4 flex items-center hover:text-blue-500>back home"></Link>
       </p>
       {!productsByCategory[categoryName] ? (
-          
-          <div className="flex justify-center items-center h-32">
+
+        <div className="flex justify-center items-center h-32">
           <FaSpinner className="w-8 h-8 text-blue-500 animate-spin" />
         </div>
-       
+
       ) : (
         productsByCategory[categoryName].map((product, index) => (
           <div
@@ -106,7 +108,7 @@ export default function Card() {
                 </span>
                 <button
                   className="text-white bg-gray-900 hover:bg-customGold focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                  onClick={() => handelAddToCart(product,index)}
+                  onClick={() => handelAddToCart(product, index)}
                 >
                   Add to cart
                   {/* need to get the product obj and insert it to array  */}
