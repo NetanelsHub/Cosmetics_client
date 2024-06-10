@@ -85,8 +85,13 @@ export default function ShoppingCart() {
       }
     }
 
-  
-
+  // Load the shopping list from localStorage
+    useEffect(() => {
+      const savedList = localStorage.getItem('shoppingList');
+      if (savedList) {
+        setShoppingList(JSON.parse(savedList));
+      }
+    }, [setShoppingList]);
     
    useEffect(() => {
     // the total price calculate
@@ -94,10 +99,12 @@ export default function ShoppingCart() {
     setTotalPrice(total)
 
     // every  time the shoppingList its change i add it to local storage
-    // localStorage.setItem("shoppingList" ,JSON.stringify(shoppingList))
+     localStorage.setItem("shoppingList" ,JSON.stringify(shoppingList))
 
-    
    }, [shoppingList]); //  only when i got  change in shopping list -  rerender
+
+
+ 
  
   return (
     <>

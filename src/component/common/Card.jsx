@@ -47,7 +47,8 @@ export default function Card() {
     if its not make a copy of product with quantity set to 1 and add it 
     to shoppingList
     */
-    
+    // const oldShoppingList = JSON.parse("shoppingList");
+    // console.log(oldShoppingList)
 
     const inList = shoppingList.some(val => val._id === product._id)
     console.log(inList)
