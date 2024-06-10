@@ -5,6 +5,8 @@ import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // 
 import { globalContext } from "../../utils/GlobalContext";
 import { shoppingContext } from "../../utils/ShoppingContext";
 
+import ClearDataButton from "../../development_component/ClearDataButton";
+
 const category_arr = [
   "Body Care",
   "Hair Line",
@@ -19,8 +21,19 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName, setShowDropdownMenu, clientName } = useContext(globalContext);
-  const { setShowModelCart, shoppingList } = useContext(shoppingContext)
+  const { setCategoryName, setShowDropdownMenu, clientName } =
+    useContext(globalContext);
+  const { setShowModelCart, shoppingList } = useContext(shoppingContext);
+
+  /* on nav bar we welcome  the user
+   opp 1. the user sign in - we get from state clientName
+   opp 2.user sign in in but he refresh - we lose the state then  we get it from season storage
+   opp 3. user not sign in  - we will use guest 
+  */
+  const storedClientInfo =
+    JSON.parse(sessionStorage.getItem("clientInfo")) || {};
+  const storedClientName = storedClientInfo?.client_fName || "";
+  const finalClientName = clientName || storedClientName || "Guest";
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -31,11 +44,11 @@ function Nav() {
     setCategoryName(categoryName);
   }
   function handelShowModel() {
-    setShowModelCart(true)
+    setShowModelCart(true);
   }
 
   function handelShowDroopDown() {
-    // show/unShow the side bar 
+    // show/unShow the side bar
     setShowDropdownMenu((prev) => !prev);
   }
 
@@ -67,13 +80,13 @@ function Nav() {
           </svg>
         </button>
         <div
-          className={`${isMenuOpen ? "block" : "hidden"
-            } w-full md:block md:w-auto`}
+          className={`${
+            isMenuOpen ? "block" : "hidden"
+          } w-full md:block md:w-auto`}
           id="navbar-default"
         >
           {/* upper nav bar */}
           <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
-            
             <ul className="flex ">
               <Li>
                 <Link to="/contact" className="hover:text-customGold">
@@ -84,21 +97,25 @@ function Nav() {
               <Li>
                 <FaUser
                   size={30}
-                  // open the side bar 
+                  // open the side bar
                   onClick={handelShowDroopDown}
                   className=" cursor-pointer hover:text-customGold"
                 />
               </Li>
-               <Li>
-                  <FaShoppingCart 
-                  size={30} 
+              <Li>
+                <FaShoppingCart
+                  size={30}
                   onClick={handelShowModel}
                   className="hover:text-customGold "
-                   />
+                />
               </Li>
-                
+
               <p> {shoppingList.length}</p>
-              <p className="pl-10">Hello {clientName ? clientName : "Guest"}. </p>
+              <p className="pl-10">Hello {finalClientName}</p>
+              {/* need to delete */}
+              <Li >
+                <ClearDataButton />
+              </Li>
             </ul>
             {/* end upper nav bar */}
           </div>
@@ -109,20 +126,22 @@ function Nav() {
             {category_arr.map((val, index) => (
               //  need to add loading
               <Li key={index} onClick={() => handelGetProduct(val)}>
-                <Link to="category">
-                  {val}
-                </Link>
+                <Link to="category">{val}</Link>
               </Li>
             ))}
           </ul>
           {/* end down nav bar */}
-
         </div>
 
         {/* Right-side div for "cosmetic" text and home icon */}
         <div className="flex items-center">
-          <p className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino">Cosmetic</p>
-          <Link to="/home" className="text-gray-600 dark:text-gray-400 hover:text-customGold">
+          <p className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino">
+            Cosmetic
+          </p>
+          <Link
+            to="/home"
+            className="text-gray-600 dark:text-gray-400 hover:text-customGold"
+          >
             <FaHome size={24} />
           </Link>
         </div>

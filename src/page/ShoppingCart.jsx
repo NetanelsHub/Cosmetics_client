@@ -64,6 +64,7 @@ export default function ShoppingCart() {
   
     async function handelCheckOut() {
       try {
+        // we check if user is login by is cookie
         const { data } = await axios.get(`${url}/auth`, {
           withCredentials: true,
         });
@@ -72,6 +73,8 @@ export default function ShoppingCart() {
           console.log(" valid user")
           setShowModelCart(false)
           navigate("/purchase")
+          // need to add the total price to session local(avoid refresh problem) 
+            sessionStorage.setItem("totalPrice", totalPrice)
         }
        
         // console.log(show, "token");
@@ -79,7 +82,7 @@ export default function ShoppingCart() {
         console.log("un valid user")
         //  to see only the login 
         setIsLogIn(true)
-      
+        // if user not valid he will go to catch and we open login in model
         setShowModelProfile(true)
       
       }
