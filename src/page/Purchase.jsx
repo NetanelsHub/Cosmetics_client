@@ -13,6 +13,8 @@ import {useNavigate}  from "react-router-dom"
 
 const url = "http://localhost:3000/orders";
 
+
+
 const validationSchema = Yup.object({
   client_phone: Yup.string().required("Phone number is required"),
   client_address: Yup.object({
@@ -25,15 +27,20 @@ const validationSchema = Yup.object({
 
 export default function Purchase() {
   const { clientInfo } = useContext(globalContext);
-  const { shoppingList, totalPrice , purchaseOrderInfo,setPurchaseOrderInfo} = useContext(shoppingContext);
+  const { shoppingList, totalPrice ,setPurchaseOrderInfo} = useContext(shoppingContext);
   const navigate = useNavigate()
-  // console.log(shoppingList);
-  // console.log(clientInfo);
+ 
+  /*
+   if user did refresh i take the info from sessionStorage
+   because on refresh all my sate its null and i get error
+    */
+  const storedClientInfo = JSON.parse(sessionStorage.getItem("clientInfo")) || {};
+  console.log(storedClientInfo.client_fName)
 
   const initialValues = {
-    client_fName: clientInfo.client_fName  ,
-    client_lName: clientInfo.client_lName ,
-    client_email: clientInfo.client_email ,
+    client_fName: clientInfo?.client_fName ? clientInfo.client_fName :storedClientInfo?.client_fName  ,
+    client_lName: clientInfo?.client_lName ? clientInfo.client_lName :storedClientInfo?.client_lName ,
+    client_email: clientInfo?.client_email ? clientInfo.client_email :storedClientInfo?.client_email  ,
     total_price: totalPrice ,
     client_phone: "",
     client_address: {
@@ -46,6 +53,8 @@ export default function Purchase() {
   
   
 function handleSubmitPurchaseInfo (values){
+  // sessionStorage.setItem('clientInfo', JSON.stringify(values));
+
   // get the info in state
     const order = {
       clientId: clientInfo._id, 
@@ -92,7 +101,7 @@ function handleSubmitPurchaseInfo (values){
                   name="client_fName"
                   type="text"
                   placeholder="*First Name"
-                  readOnly
+                  // readOnly
                 />
                 <FieldMy
                   name="client_lName"
