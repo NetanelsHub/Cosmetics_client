@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -8,37 +8,40 @@ import {
 } from "react-router-dom";
 
 //layout
-import Nav from "./component/layout/Nav";
+import Nav from "./component/layout/Nav"
 import ProfileSideBar from "./component/layout/ProfileSideBar";
 import Form_Sign_Up_In from "./component/form/Form_Sign_Up_In";
 import Footer from "./component/layout/Footer";
+import ShoppingCart from "./page/ShoppingCart";
 
 // pages
-import CategoryCard from "./page/CategoryCard";
-import Home from "./page/Home";
-import ShoppingCart from "./page/ShoppingCart"; //should be in lay out 
-import Purchase from "./page/Purchase";
-import Payment from "./page/Payment";
+const CategoryCard = React.lazy(() => import("./page/CategoryCard"));
+const Home = React.lazy(() => import("./page/Home"));
+const Purchase = React.lazy(() => import("./page/Purchase"));
+const Payment = React.lazy(() => import("./page/Payment"));
 
 //footer pages
-import AboutUs from "./page/footer_pages/AboutUs"
-import ContactUs from "./page/footer_pages/ContactUs"
-import PrivacyPolicy from "./page/footer_pages/PrivacyPolicy"
-import TermsAndConditions from  "./page/footer_pages/TermsAndConditions"
-import Blog from "./page/footer_pages/Blog";
+const AboutUs = React.lazy(() => import("./page/footer_pages/AboutUs"));
+const ContactUs = React.lazy(() => import("./page/footer_pages/ContactUs"));
+const PrivacyPolicy = React.lazy(() => import("./page/footer_pages/PrivacyPolicy"));
+const TermsAndConditions = React.lazy(() => import("./page/footer_pages/TermsAndConditions"));
+const Blog = React.lazy(() => import("./page/footer_pages/Blog"));
 
 function Root() {
   return (
     <>
       <Nav />
       <div className="relative">
-        <Outlet />
-        <ProfileSideBar />
-        <ShoppingCart/>
-        <Form_Sign_Up_In />
+        <Suspense fallback={<div>loading ...</div>}>
+          <Outlet />
+          <ProfileSideBar />
+          <ShoppingCart />
+          <Form_Sign_Up_In />
+        </Suspense>
       </div>
-
-      <Footer />
+      <Suspense fallback={<div>loading ...</div>}>
+        <Footer />
+      </Suspense>
     </>
   );
 }
@@ -61,7 +64,7 @@ function App() {
 
         termsAndConditions
 
-      
+
       </Route>
     )
   );
@@ -69,9 +72,9 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-    
-    
-   
+
+
+
     </>
   );
 }

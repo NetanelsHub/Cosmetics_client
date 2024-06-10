@@ -1,17 +1,17 @@
-import React from 'react'
-import Carousel from '../component/common/Carousel'
-import DoorAnimation from '../component/common/DoorAnimation'
+import React,{Suspense} from 'react'
+const Carousel = React.lazy(() => import('../component/common/Carousel'));
+// import DoorAnimation from '../component/common/DoorAnimation'
 
 
 export default function Home() {
- 
+
 
   return (
     <>
-    {/* <DoorAnimation> */}
+      <Suspense fallback={<div>Loading...</div>}>
         <Carousel />
-    {/* </DoorAnimation> */}
-  
+      </Suspense>
+
     </>
   )
 }

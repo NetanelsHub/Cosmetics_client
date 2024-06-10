@@ -1,7 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect,Suspense } from "react";
 import { globalContext } from "../utils/GlobalContext";
 import axios from "axios";
-import Card from "../component/common/Card";
+const Card = React.lazy(() => import("../component/common/Card"));
 
 const url = "http://localhost:3000/products/getProductsByCategory";
 
@@ -15,12 +15,12 @@ export default function CategoryCard() {
   //data.productsByCategory
 
   async function getProductByCategory() {
-   
+
     try {
 
       if (isFetch) {
-        console.log("categoryName:" , categoryName)
-        const { data } = await axios.get(`${url}?Search=${categoryName? categoryName: localStorage.getItem("category") }`, {
+        console.log("categoryName:", categoryName)
+        const { data } = await axios.get(`${url}?Search=${categoryName ? categoryName : localStorage.getItem("category")}`, {
           withCredentials: true,
         });
         if (!data) throw new Error("There is not Products");
@@ -29,7 +29,7 @@ export default function CategoryCard() {
           ...prevDate,
           [categoryName]: data.productsByCategory,
         }));
-        
+
         /* 
         problem : after we do refresh the categoryName its null.!
         solution :to avoid it on the 1st time when categoryName its not null
@@ -38,25 +38,28 @@ export default function CategoryCard() {
         and want change the local storage any more because  the category name 
         is null
          */
-       if (categoryName){
-       localStorage.setItem("category",categoryName)}
-        
+        if (categoryName) {
+          localStorage.setItem("category", categoryName)
+        }
+
       }
     } catch (error) {
-      
+
     }
-   
+
   }
 
   useEffect(() => {
     getProductByCategory();
-    // localStorage.setItem("category",categoryName)
+
 
   }, [categoryName]);
 
   return (
     <>
-      <Card />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Card />
+      </Suspense>
     </>
   );
 }
