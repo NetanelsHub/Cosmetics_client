@@ -75,10 +75,10 @@ export default function Form_Sign_Up_In() {
          and i can get is info (les risk)
         */
        
-         const {client_fName,client_lName,client_email} = data.client
+         const {client_fName,client_lName,client_email,_id} = data.client
 
          sessionStorage.setItem("clientInfo", JSON.stringify(
-            {client_fName,client_lName,client_email}));
+            {client_fName,client_lName,client_email,_id}));
        
       } catch (error) {
         // console.error("Error logging in:", error);

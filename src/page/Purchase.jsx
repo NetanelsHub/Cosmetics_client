@@ -36,6 +36,8 @@ export default function Purchase() {
     */
   const storedClientInfo = JSON.parse(sessionStorage.getItem("clientInfo")) || {};
   console.log(storedClientInfo.client_fName)
+  console.log(storedClientInfo._id)
+
 
   const initialValues = {
     client_fName: clientInfo?.client_fName ? clientInfo.client_fName :storedClientInfo?.client_fName  ,
@@ -57,7 +59,7 @@ function handleSubmitPurchaseInfo (values){
 
   // get the info in state
     const order = {
-      clientId: clientInfo._id, 
+      clientId:  clientInfo?._id != null ? clientInfo._id : storedClientInfo?.client_id, 
       client_details: {
         client_phone: values.client_phone,
         client_address: {

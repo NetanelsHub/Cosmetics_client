@@ -44,8 +44,8 @@ export default function Footer() {
           </div>
           <div className="flex items-center">
             <FaEnvelope className="mr-2" />
-            <a href="mailto:info@example.com" className="hover:text-customGold">
-              Email: info@example.com
+            <a href="mailto:cosmeticsproject2024@gmail.com" className="hover:text-customGold">
+              Email: cosmeticsproject2024@gmail.com
             </a>
           </div>
         </div>
