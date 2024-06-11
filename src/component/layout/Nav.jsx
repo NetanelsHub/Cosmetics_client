@@ -102,7 +102,7 @@ function Nav() {
                   className=" cursor-pointer hover:text-customGold"
                 />
               </Li>
-              <Li>
+              <Li >
                 <FaShoppingCart
                   size={30}
                   onClick={handelShowModel}
@@ -112,10 +112,12 @@ function Nav() {
 
               <p> {shoppingList.length}</p>
               <p className="pl-10">Hello {finalClientName}</p>
+
               {/* need to delete */}
-              <Li >
-                <ClearDataButton />
+              <Li className="mr-0">
+                <ClearDataButton className="mr-0" />
               </Li>
+
             </ul>
             {/* end upper nav bar */}
           </div>

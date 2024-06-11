@@ -25,11 +25,13 @@ export default function ClearDataButton() {
   };
 
   return (
+    <div className='pl-5'>
     <button
       onClick={clearAllData}
       className=" bg-red-500 text-white px-4 py-2 rounded"
     >
       Clear All Data
     </button>
+    </div>
   );
 }
