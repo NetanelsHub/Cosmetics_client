@@ -7,11 +7,10 @@ import DiscountWatermark from "./DiscountMark";
 import { shoppingContext } from "../../utils/ShoppingContext";
 
 
-// const url = "http://localhost:3000/products/getAllProducts";
-const url = "http://localhost:3000/products/discounted";
+const url = "http://localhost:3000/products/";
 
-export default function Carousel() {
-  // set all product from server with discount 
+export default function Carousel({endPoint}) {
+  // set all product from server with discount or best seller
   const [discountProducts, setDiscountProducts] = useState([]);
 
   // add  product and quantity 
@@ -20,7 +19,7 @@ export default function Carousel() {
   async function getProductByDiscount() {
     try {
       // need to make discount end point 
-      const { data } = await axios.get(url, {
+      const { data } = await axios.get(`${url}${endPoint}`, {
         withCredentials: true,
       });
       console.log("data:",data)
@@ -70,8 +69,9 @@ export default function Carousel() {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 3, // need to use at as propes
     slidesToScroll: 1,
+    autoplaySpeed: 30000, // 30 sec
     responsive: [
       {
         breakpoint: 1024,
@@ -94,7 +94,7 @@ export default function Carousel() {
   };
 
   return (
-    <div className="w-4/5 h-[35vh] mx-auto mb-20">
+    <div className="w-4/5 h-[35vh] mx-auto mb-40">
       <Slider {...settings}>
         {discountProducts.map((product, index) => (
           <div
@@ -103,7 +103,7 @@ export default function Carousel() {
           >
             <div className="relative flex items-center justify-center w-full h-40">
               {/* val.discount */}
-              <DiscountWatermark discount={product.product_discount} />
+             {endPoint === "discounted" && <DiscountWatermark discount={product.product_discount} />}
               <img
                 className="w-40 h-40 object-contain"
                 src={product.product_image}
