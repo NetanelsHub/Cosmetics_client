@@ -89,7 +89,7 @@ function Nav() {
           <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
             <ul className="flex ">
               <Li>
-                <Link to="/contact" className="hover:text-customGold">
+                <Link to="/contactUs" className="hover:text-customGold">
                   <FaEnvelope size={30} />
                 </Link>
               </Li>
@@ -137,9 +137,9 @@ function Nav() {
 
         {/* Right-side div for "cosmetic" text and home icon */}
         <div className="flex items-center">
-          <p className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino">
+        <a className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino hover:text-customGold" href="/home">
             Cosmetic
-          </p>
+          </a>
           <Link
             to="/home"
             className="text-gray-600 dark:text-gray-400 hover:text-customGold"

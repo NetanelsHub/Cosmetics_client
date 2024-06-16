@@ -6,36 +6,38 @@ export default function Footer() {
   return (
     <footer className="bg-gray-700 text-white py-10 position:relative z-0 bottom-0 mt-10">
       <div className="container mx-auto flex justify-between">
-        <div className="w-1/2">
-          <h2 className="text-lg font-bold mb-4">INFORMATION</h2>
-          <ul className="space-y-2">
-            <li className="hover:text-customGold">
-              <Link to="aboutUs">
-                About Us
-              </Link>
-            </li>
-            <li className="hover:text-customGold">
-              <Link to="contactUs">
-                Contact Us
-              </Link>
-            </li>
-            <li className="hover:text-customGold">
-              <Link to="privacyPolicy">
-                Privacy Policy
-              </Link>
-            </li>
-            <li className="hover:text-customGold">
-              <Link to="termsAndConditions">
-                Terms and Conditions
-              </Link>
-            </li>
-            <li className="hover:text-customGold">
-              <Link to="blog">
-                Blog
-              </Link>
-            </li>
-          </ul>
-        </div>
+      <div className="w-1/2 pl-10">
+  <h2 className="text-lg font-bold mb-4">INFORMATION</h2>
+  <ul className="space-y-2">
+    <li>
+      <Link to="aboutUs" className="inline-block hover:text-customGold">
+        <span>About Us</span>
+      </Link>
+    </li>
+    <li>
+      <Link to="contactUs" className="inline-block hover:text-customGold">
+        <span>Contact Us</span>
+      </Link>
+    </li>
+    <li>
+      <Link to="privacyPolicy" className="inline-block hover:text-customGold">
+        <span>Privacy Policy</span>
+      </Link>
+    </li>
+    <li>
+      <Link to="termsAndConditions" className="inline-block hover:text-customGold">
+        <span>Terms and Conditions</span>
+      </Link>
+    </li>
+    <li>
+      <Link to="blog" className="inline-block hover:text-customGold">
+        <span>Blog</span>
+      </Link>
+    </li>
+  </ul>
+</div>
+
+
         <div className="w-1/2">
           <h2 className="text-lg font-bold mb-4">CONTACT US</h2> {/* Add the header here */}
           <div className="flex items-center mb-2">
