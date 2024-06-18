@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useRef  } from "react";
 import { Link } from "react-router-dom";
 import Li from "../common/Li";
 import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
@@ -21,10 +21,29 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName, setShowDropdownMenu, clientName } =
+  const { setCategoryName, setShowDropdownMenu, clientName ,setShowModelProfile,setIsLogIn} =
     useContext(globalContext);
   const { setShowModelCart, shoppingList } = useContext(shoppingContext);
 
+
+  const navbarRef = useRef(null);
+
+  const handleShowDropdown = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleCloseDropdown = (e) => {
+    if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCloseDropdown);
+    return () => {
+      document.removeEventListener('mousedown', handleCloseDropdown);
+    };
+  }, []);
   /* on nav bar we welcome  the user
    opp 1. the user sign in - we get from state clientName
    opp 2.user sign in in but he refresh - we lose the state then  we get it from season storage
@@ -47,9 +66,10 @@ function Nav() {
     setShowModelCart(true);
   }
 
-  function handelShowDroopDown() {
+  function handelShowModelProfile() {
     // show/unShow the side bar
-    setShowDropdownMenu((prev) => !prev);
+    setShowModelProfile(true);
+    setIsLogIn(true);
   }
 
   return (
@@ -79,6 +99,7 @@ function Nav() {
             />
           </svg>
         </button>
+        <div ref={navbarRef}>
         <div
           className={`${
             isMenuOpen ? "block" : "hidden"
@@ -98,7 +119,7 @@ function Nav() {
                 <FaUser
                   size={30}
                   // open the side bar
-                  onClick={handelShowDroopDown}
+                  onClick={handelShowModelProfile}
                   className=" cursor-pointer hover:text-customGold"
                 />
               </Li>
@@ -133,7 +154,7 @@ function Nav() {
             ))}
           </ul>
           {/* end down nav bar */}
-        </div>
+        </div></div>
 
         {/* Right-side div for "cosmetic" text and home icon */}
         <div className="flex items-center">

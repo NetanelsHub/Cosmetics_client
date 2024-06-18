@@ -6,7 +6,7 @@ export default function FieldMy({ name, placeholder, type , readOnly = false }) 
  
   
   return (
-    <div className="mb-5">
+    <div className="mb-5 flex-col justify-center items-center px-11">
 
       <Field
         type={type}
@@ -14,7 +14,7 @@ export default function FieldMy({ name, placeholder, type , readOnly = false }) 
         name={`${name}`}
 
         // disabled={readOnly}
-        className={`border-b border-black p-2 ${
+        className={`border-b border-black p-2 w-full ${
           readOnly ? "bg-gray-200 text-gray-900" : "dark:text-white dark:border-white"
         }`}
 

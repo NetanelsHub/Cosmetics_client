@@ -13,7 +13,7 @@ export default function ShoppingCart() {
   const { shoppingList, setShoppingList, showModelCart, setShowModelCart, totalPrice,
     setTotalPrice } = useContext(shoppingContext)
 
-  const {setShowModelProfile,setIsLogIn} = useContext( globalContext )
+  const {setShowModelProfile,setShowDropdownMenu,setIsLogIn} = useContext( globalContext )
 
   const navigate  = useNavigate()
 
@@ -28,8 +28,8 @@ export default function ShoppingCart() {
     item.quantity -= 1
 
     if (item.quantity < 1) {
-      // if its quantity 0 remove it from the list
-      onDelete(index)
+      updatedList[index] = 1
+      
     }
     else {
       setShoppingList(updatedList)
@@ -56,9 +56,9 @@ export default function ShoppingCart() {
     setShoppingList(newShoppingList)
   }
 
-  function handleClearCart() {
-    setShoppingList([])
-  }
+  // function handleClearCart() {
+  //   setShoppingList([])
+  // }
 
   
   
@@ -70,7 +70,7 @@ export default function ShoppingCart() {
         });
         
         if(data.success){
-          console.log(" valid user")
+          // console.log(" valid user")
           setShowModelCart(false)
           navigate("/purchase")
           // need to add the total price to session local(avoid refresh problem) 
@@ -81,8 +81,11 @@ export default function ShoppingCart() {
       } catch (error) {
         console.log("un valid user")
         //  to see only the login 
+        sessionStorage.setItem("checkOut", true)
+
         setIsLogIn(true)
         // if user not valid he will go to catch and we open login in model
+        setShowModelCart(false)
         setShowModelProfile(true)
       
       }
@@ -121,7 +124,7 @@ export default function ShoppingCart() {
               {/* <span >Total Price: { shoppingList.reduce((sum, val) => sum + (val.product_price * val.quantity), 0)} $ </span> */}
               <span >Total Price: {totalPrice} $ </span>
             </div>
-           {shoppingList.length > 0 && <button onClick={handleClearCart} className='text-red-500'>Clear cart</button> }
+           {/* {shoppingList.length > 0 && <button onClick={handleClearCart} className='text-red-500'>Clear cart</button> } */}
           </div>
           {/* loop on shoppingList card */}
           {/* if user refresh or click on x  i need to get is shopping list  from local storage  */}
@@ -146,7 +149,7 @@ export default function ShoppingCart() {
                     +
                   </button>
                 </div>
-                <button onClick={() => onDelete(index)} className="text-red-500 mt-2">Delete</button>
+                <button onClick={() => onDelete(index)} className="text-red-500 mt-2">Remove</button>
               </div>
             </div>
           )

@@ -9,10 +9,12 @@ import {
 
 //layout
 import Nav from "./component/layout/Nav"
-import ProfileSideBar from "./component/layout/ProfileSideBar";
+
 import Form_Sign_Up_In from "./component/form/Form_Sign_Up_In";
 import Footer from "./component/layout/Footer";
 import ShoppingCart from "./page/ShoppingCart";
+import ForgotPassword from "./page/ForgotPassword";
+import ResetPassword from "./page/ResetPassword";
 
 // pages
 const CategoryCard = React.lazy(() => import("./page/CategoryCard"));
@@ -34,7 +36,7 @@ function Root() {
       <div className="relative">
         <Suspense fallback={<div>loading ...</div>}>
           <Outlet />
-          <ProfileSideBar />
+   
           <ShoppingCart />
           <Form_Sign_Up_In />
         </Suspense>
@@ -52,6 +54,8 @@ function App() {
       <Route path="/" element={<Root />}>
         <Route index element={<Home />} />
         <Route path="home" element={<Home />} />
+        <Route path="ForgotPassword" element={<ForgotPassword />} />
+        <Route path="resetPassword" element={<ResetPassword />} />
         <Route path="category" element={<CategoryCard />} />
         <Route path="purchase" element={<Purchase />} />
         <Route path="purchase/payment" element={<Payment />} />
