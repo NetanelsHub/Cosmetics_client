@@ -5,6 +5,7 @@ import FieldMy from "../component/common/FiledMy";
 import { globalContext } from "../utils/GlobalContext";
 import { shoppingContext } from "../utils/ShoppingContext";
 import {useNavigate}  from "react-router-dom"
+import Bill from '../component/common/Bill';
 
 // import axios from "axios";
 // import Paypal from "../component/common/Paypal";
@@ -167,11 +168,12 @@ function handleSubmitPurchaseInfo (values){
               type="submit"
               className="w-full text-black bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
             >
-              Submit Order
+              Proceed to payment
             </button>
           </Form>
         </Formik>
         {/* <Paypal /> */}
+      <Bill/>
       </div>
     </section>
   );
