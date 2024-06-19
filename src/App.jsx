@@ -9,7 +9,6 @@ import {
 
 //layout
 import Nav from "./component/layout/Nav"
-
 import Form_Sign_Up_In from "./component/form/Form_Sign_Up_In";
 import Footer from "./component/layout/Footer";
 import ShoppingCart from "./page/ShoppingCart";
