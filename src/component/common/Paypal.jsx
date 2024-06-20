@@ -2,15 +2,15 @@ import React, { useContext, useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from "axios";
 import { shoppingContext } from "../../utils/ShoppingContext";
+import { useNavigate } from "react-router-dom";
 
 const url = "http://localhost:3000/orders/addOrder";
 
 function Paypal() {
   const { purchaseOrderInfo } = useContext(shoppingContext);
   console.log("total price is:",purchaseOrderInfo.total_price);
+  const navigate = useNavigate()
 
-  // console.log(purchaseOrderInfo.total_price)
-  // console.log("1")
   const createOrder = async (data) => {
     // Order is created on the server and the order id is returned
     const response = await axios({
@@ -48,6 +48,7 @@ function Paypal() {
         console.log("Payment process is complete.");
 
         await addOrderDb();
+        navigate("tankYou")
       } else {
         console.log("Payment was not completed successfully.");
         // Handle non-completed payment cases

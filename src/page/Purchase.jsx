@@ -58,17 +58,21 @@ export default function Purchase() {
         RTP: val.product_price,
         quantity: val.quantity,
       })),
-      status: 1,
+      status: 0,
     };
     setPurchaseOrderInfo(order);
     navigate("payment");
   }
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-4xl h-full flex flex-col p-8 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+    <div className=" mt-6 mb-6 w-auto h-auto min-h-screen flex items-center justify-center">
+      
+      <div className="w-full max-w-4xl h-auto flex flex-col p-8 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
+      <div className=" mb-12">
+          <Bill />
+        </div>
         <div className="flex-grow overflow-auto">
-          <h2 className="mb-6 text-xl font-bold leading-tight tracking-tight text-customGold">
+          <h2 className="mb-6 mt-4 text-xl font-bold leading-tight tracking-tight text-customGold">
             Shipping information
           </h2>
 
@@ -143,12 +147,11 @@ export default function Purchase() {
               </button>
             </Form>
           </Formik>
-          <div className="mt-4">
-          <Bill />
+        
         </div>
-        </div>
-       
+        
       </div>
+     
     </div>
   );
 }
