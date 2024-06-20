@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { shoppingContext } from '..//utils/ShoppingContext'
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import Paypal from "../component/common/Paypal"
-import Bill from '../component/common/Bill';
+// import Bill from '../component/common/Bill';
 
 export default function Payment() {
     const { purchaseOrderInfo, shoppingList } = useContext(shoppingContext);

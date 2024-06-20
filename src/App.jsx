@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { Suspense,lazy } from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -16,34 +16,32 @@ import ForgotPassword from "./page/ForgotPassword";
 import ResetPassword from "./page/ResetPassword";
 
 // pages
-const CategoryCard = React.lazy(() => import("./page/CategoryCard"));
-const Home = React.lazy(() => import("./page/Home"));
-const Purchase = React.lazy(() => import("./page/Purchase"));
-const Payment = React.lazy(() => import("./page/Payment"));
+const CategoryCard = lazy(() => import("./page/CategoryCard"));
+const Home = lazy(() => import("./page/Home"));
+const Purchase = lazy(() => import("./page/Purchase"));
+const Payment = lazy(() => import("./page/Payment"));
+const TankYou = lazy(() => import("./page/TankYou"));
 
 //footer pages
-const AboutUs = React.lazy(() => import("./page/footer_pages/AboutUs"));
-const ContactUs = React.lazy(() => import("./page/footer_pages/ContactUs"));
-const PrivacyPolicy = React.lazy(() => import("./page/footer_pages/PrivacyPolicy"));
-const TermsAndConditions = React.lazy(() => import("./page/footer_pages/TermsAndConditions"));
-const Blog = React.lazy(() => import("./page/footer_pages/Blog"));
+const AboutUs = lazy(() => import("./page/footer_pages/AboutUs"));
+const ContactUs = lazy(() => import("./page/footer_pages/ContactUs"));
+const PrivacyPolicy = lazy(() => import("./page/footer_pages/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("./page/footer_pages/TermsAndConditions"));
+const Blog = lazy(() => import("./page/footer_pages/Blog"));
 
 function Root() {
   return (
-    <>
+    <div>
       <Nav />
       <div className="relative">
         <Suspense fallback={<div>loading ...</div>}>
           <Outlet />
-   
           <ShoppingCart />
           <Form_Sign_Up_In />
         </Suspense>
       </div>
-      <Suspense fallback={<div>loading ...</div>}>
         <Footer />
-      </Suspense>
-    </>
+    </div>
   );
 }
 
@@ -64,9 +62,7 @@ function App() {
         <Route path="privacyPolicy" element={<PrivacyPolicy />} />
         <Route path="termsAndConditions" element={<TermsAndConditions />} />
         <Route path="blog" element={<Blog />} />
-
-        termsAndConditions
-
+        <Route path="purchase/payment/tankYou" element={<TankYou />} />
 
       </Route>
     )

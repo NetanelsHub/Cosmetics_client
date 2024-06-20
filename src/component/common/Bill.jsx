@@ -20,7 +20,7 @@ export default function Bill({ children }) {
               Total payment:
             </h1>
             <span className="text-lg font-semibold text-gray-800">
-              {(totalPrice * 1).toFixed(2)}
+              ${(totalPrice * 1).toFixed(2)}
             </span>
           </div>
           {/* <h2 className="text-md font-medium mb-1 text-gray-700">Subtotal</h2> */}
