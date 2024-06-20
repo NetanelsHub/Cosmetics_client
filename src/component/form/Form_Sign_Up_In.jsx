@@ -39,14 +39,14 @@ export default function Form_Sign_Up_In() {
     client_email: Yup.string()
       .email("Email must be a valid email")
       .required("Email is required"),
-    client_password: Yup.string()
-      .min(5, "Password must be at least 5 characters")
-      .max(12, "Password can't be greater than 12 characters")
-      .matches(
-        /^(?=.[a-z])(?=.[A-Z]).*$/,
-        "Password must contain at least one lowercase letter and one uppercase letter"
-      )
-      .required("Password is required"),
+    // client_password: Yup.string()
+    //   .min(5, "Password must be at least 5 characters")
+    //   .max(12, "Password can't be greater than 12 characters")
+    //   .matches(
+    //     /^(?=.[a-z])(?=.[A-Z]).*$/,
+    //     "Password must contain at least one lowercase letter and one uppercase letter"
+    //   )
+    //   .required("Password is required"),
     ...(isLogIn
       ? {}
       : {

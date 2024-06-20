@@ -7,7 +7,8 @@ import { useNavigate } from "react-router-dom";
 const url = "http://localhost:3000/orders/addOrder";
 
 function Paypal() {
-  const { purchaseOrderInfo } = useContext(shoppingContext);
+  //purchaseOrderInfo
+  const { purchaseOrderInfo,setShoppingList,setPurchaseOrderInfo } = useContext(shoppingContext);
   console.log("total price is:",purchaseOrderInfo.total_price);
   const navigate = useNavigate()
 
@@ -48,7 +49,15 @@ function Paypal() {
         console.log("Payment process is complete.");
 
         await addOrderDb();
+        // clear seeson local state crtgt state order info
+        localStorage.clear("shoppingList")
+        setShoppingList([])
+        setPurchaseOrderInfo({})
+
+
+
         navigate("tankYou")
+        
       } else {
         console.log("Payment was not completed successfully.");
         // Handle non-completed payment cases

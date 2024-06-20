@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState,useRef  } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Li from "../common/Li";
 import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
@@ -21,10 +21,14 @@ function Nav() {
   // for the responsive button
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // set the category name
-  const { setCategoryName, setShowDropdownMenu, clientName ,setShowModelProfile,setIsLogIn} =
-    useContext(globalContext);
+  const {
+    setCategoryName,
+    setShowDropdownMenu,
+    clientName,
+    setShowModelProfile,
+    setIsLogIn,
+  } = useContext(globalContext);
   const { setShowModelCart, shoppingList } = useContext(shoppingContext);
-
 
   const navbarRef = useRef(null);
 
@@ -39,9 +43,9 @@ function Nav() {
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleCloseDropdown);
+    document.addEventListener("mousedown", handleCloseDropdown);
     return () => {
-      document.removeEventListener('mousedown', handleCloseDropdown);
+      document.removeEventListener("mousedown", handleCloseDropdown);
     };
   }, []);
   /* on nav bar we welcome  the user
@@ -100,72 +104,78 @@ function Nav() {
           </svg>
         </button>
         <div ref={navbarRef}>
-        <div
-          className={`${
-            isMenuOpen ? "block" : "hidden"
-          } w-full md:block md:w-auto`}
-          id="navbar-default"
-        >
-          {/* upper nav bar */}
-          <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
-            <ul className="flex ">
-              <Li>
-                <Link to="/contactUs" className="hover:text-customGold">
-                  <FaEnvelope size={30} />
-                </Link>
-              </Li>
-              {/* i need to be on every category this why i remove the link */}
-              <Li>
-                <FaUser
-                  size={30}
-                  // open the side bar
-                  onClick={handelShowModelProfile}
-                  className=" cursor-pointer hover:text-customGold"
-                />
-              </Li>
-              <Li >
-                <FaShoppingCart
-                  size={30}
-                  onClick={handelShowModel}
-                  className="hover:text-customGold "
-                />
-              </Li>
+          <div
+            className={`${
+              isMenuOpen ? "block" : "hidden"
+            } w-full md:block md:w-auto`}
+            id="navbar-default"
+          >
+            {/* upper nav bar */}
+            <div className="max-w-screen-xl flex flex-wrap items-center mx-auto p-4">
+              <ul className="flex ">
+                <Li>
+                  <Link to="/contactUs" className="hover:text-customGold">
+                    <FaEnvelope size={30} />
+                  </Link>
+                </Li>
+                {/* i need to be on every category this why i remove the link */}
+                <Li>
+                  <FaUser
+                    size={30}
+                    onClick={handelShowModelProfile}
+                    className=" cursor-pointer hover:text-customGold"
+                  />
+                </Li>
+                <Li>
+                  <FaShoppingCart
+                    size={30}
+                    onClick={handelShowModel}
+                    className="hover:text-customGold "
+                  />
+                </Li>
 
-              <p> {shoppingList.length}</p>
-              <p className="pl-10">Hello {finalClientName}</p>
+                <p> {shoppingList.length}</p>
+                <p className="pl-10">Hello {finalClientName}</p>
 
-              {/* need to delete */}
-              <Li className="mr-0">
-                <ClearDataButton className="mr-0" />
-              </Li>
-
-            </ul>
+                {/* need to delete */}
+                <Li className="mr-0">
+                  <ClearDataButton className="mr-0" />
+                </Li>
+              </ul>
+              {/* end upper nav bar */}
+            </div>
             {/* end upper nav bar */}
-          </div>
-          {/* end upper nav bar */}
 
-          {/* down nav bar  */}
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-            {category_arr.map((val, index) => (
-              //  need to add loading
-              <Li key={index} onClick={() => handelGetProduct(val)}>
-                <Link to="category">{val}</Link>
-              </Li>
-            ))}
-          </ul>
-          {/* end down nav bar */}
-        </div></div>
+            {/* down nav bar  */}
+            <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+              {category_arr.map((val, index) => (
+                //  need to add loading
+                <Li key={index} onClick={() => handelGetProduct(val)}>
+                  <Link to="category">{val}</Link>
+                </Li>
+              ))}
+            </ul>
+            {/* end down nav bar */}
+          </div>
+        </div>
 
         {/* Right-side div for "cosmetic" text and home icon */}
         <div className="flex items-center">
-        <a className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino hover:text-customGold" href="/home">
+          {/* <a
+            className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino hover:text-customGold"
+            href="/home"
+          >
             Cosmetic
-          </a>
+          </a> */}
           <Link
             to="/home"
             className="text-gray-600 dark:text-gray-400 hover:text-customGold"
           >
-            <FaHome size={24} />
+            {/* <FaHome size={24} /> */}
+            <img
+            className="w-[150x] h-[150px] object-cover cursor-pointer"
+             src="https://res.cloudinary.com/dijj34ady/image/upload/v1718875826/sinleidftnkhskxvtjy1.png " 
+             alt="logo" />
           </Link>
         </div>
       </div>
