@@ -10,8 +10,8 @@ export default function TankYou() {
           <h1 className="text-4xl font-bold text-yellow-400">Thank you</h1>
         </div>
         <p className="mb-4">
-          The company would like to thank you very much for shopping with us and
-          trusting in our products.
+          Minerals Cosmetic would like to thank you very much for shopping with
+          us and trusting in our products.
         </p>
         <p className="mb-4">
           In order to continue growing and improving our services, we need your

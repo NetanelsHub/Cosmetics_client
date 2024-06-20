@@ -1,9 +1,8 @@
-
 import React, { useContext, useState } from "react";
 import { globalContext } from "../utils/GlobalContext";
-
-
 import axios from 'axios';
+
+const url = "http://localhost:3000/client/forgotPassword";
 
 export default function ForgotPassword() {
     const {
@@ -11,9 +10,7 @@ export default function ForgotPassword() {
         setShowModelProfile,
         setShowDropdownMenu,
       } = useContext(globalContext);
-
-
-  const url = "http://localhost:3000/client/forgotPassword";
+  
   const [sendRecoverEmail, setSendRecoverEmail] = useState(false);
   const [client_email, setEmail] = useState("");
 
