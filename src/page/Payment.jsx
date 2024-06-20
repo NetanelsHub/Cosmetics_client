@@ -86,7 +86,7 @@ export default function Payment() {
                     {/* Add future content here */}
                 </div>
             </div>
-            <Bill/>
+            
         </div>
     );
 }
