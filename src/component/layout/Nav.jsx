@@ -4,6 +4,8 @@ import Li from "../common/Li";
 import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
 import { globalContext } from "../../utils/GlobalContext";
 import { shoppingContext } from "../../utils/ShoppingContext";
+import logo from "../../assets/ImageToStl.com_sinleidftnkhskxvtjy1 (1).webp";
+
 
 import ClearDataButton from "../../development_component/ClearDataButton";
 
@@ -161,20 +163,15 @@ function Nav() {
 
         {/* Right-side div for "cosmetic" text and home icon */}
         <div className="flex items-center">
-          {/* <a
-            className="mr-4 text-gray-900 dark:text-gray-400 text-xl font-serif font-palatino hover:text-customGold"
-            href="/home"
-          >
-            Cosmetic
-          </a> */}
+
           <Link
             to="/home"
             className="text-gray-600 dark:text-gray-400 hover:text-customGold"
           >
             {/* <FaHome size={24} /> */}
             <img
-            className="w-[150x] h-[150px] object-cover cursor-pointer"
-             src="https://res.cloudinary.com/dijj34ady/image/upload/v1718875826/sinleidftnkhskxvtjy1.png " 
+            className="w-[100x] h-[100px] object-cover cursor-pointer"
+             src={logo}
              alt="logo" />
           </Link>
         </div>

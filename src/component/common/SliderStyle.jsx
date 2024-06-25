@@ -4,9 +4,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 //image import
-import pic1 from "../../assets/style/1.jpg";
-import pic2 from "../../assets/style/2.jpg";
-import pic3 from "../../assets/style/3.jpg";
+import pic1 from "../../assets/style/_DSC1866.webp";
+import pic2 from "../../assets/style/_DSC1933.webp";
+import pic3 from "../../assets/style/ImageToStl.com_aqua+28.04.webp";
 
 const imageArray = [pic1, pic2, pic3];
 

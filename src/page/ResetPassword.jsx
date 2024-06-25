@@ -1,11 +1,13 @@
 import axios from "axios";
-
-
+import { useGoogleLogin } from "@react-oauth/google";
 import React, { useContext, useState } from "react";
 import { globalContext } from "../utils/GlobalContext";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+
 
 const url = "http://localhost:3000/client/resetPassword";
+const googleUrl = "https://www.googleapis.com/oauth2/v3/userinfo";
 
 function ResetPassword() {
     const {
@@ -18,7 +20,7 @@ function ResetPassword() {
   const token = query.get("token")
   const id = query.get("uid")
 
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -26,12 +28,19 @@ function ResetPassword() {
     const confirmPassword = e.target.confirm_password.value; 
     const password = e.target.password.value; 
     if(confirmPassword !== password) return alert("password not match");
+   await ResetPasswordClient(password)
+  }
+
+async function ResetPasswordClient(password){
+  const navigate = useNavigate();
+
     try {
      const { data } = await axios.post(`${url}?token=${token}&uid=${id}`,{ password });
      if(data.success){
+      navigate("/home")
         setIsLogIn(true)
         // if user not valid he will go to catch and we open login in model
-        
+       
         setShowModelProfile(true)
       
      }
@@ -39,7 +48,24 @@ function ResetPassword() {
       console.log(error);
       alert("you hackerrrrr")
     }
-  }
+}
+
+const loginFromGoogle = useGoogleLogin({
+  onSuccess: async (response) => {
+    try {
+      const { data } = await axios.get(googleUrl, {
+        headers: {
+          Authorization: `Bearer ${response.access_token}`,
+        },
+      });
+      const clientInfoFromGoogle = data.sub
+      
+      await ResetPasswordClient(clientInfoFromGoogle)
+    } catch (error) {
+      console.log(error);
+    }
+  },
+});
 
 
 
@@ -85,6 +111,14 @@ function ResetPassword() {
                 required=""
               />
             </div>
+            <button
+            type="button"
+            onClick={loginFromGoogle}
+            className="w-full flex items-center justify-center text-black bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 border border-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-4"
+          >
+            <FcGoogle className="mr-2" size={25} />
+            Change Password with Google
+          </button>
             
             <button
               type="submit"
