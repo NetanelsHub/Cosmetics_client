@@ -12,19 +12,13 @@ export default function CategoryCard() {
   // isFetch - checked if we already send request to the server by this category product
   const isFetch = !productsByCategory[categoryName];
 
-  //data.productsByCategory
-
   async function getProductByCategory() {
-
     try {
-
       if (isFetch) {
-        console.log("categoryName:", categoryName)
         const { data } = await axios.get(`${url}?Search=${categoryName ? categoryName : localStorage.getItem("category")}`, {
           withCredentials: true,
         });
         if (!data) throw new Error("There is not Products");
-
         setProductsByCategory((prevDate) => ({
           ...prevDate,
           [categoryName]: data.productsByCategory,

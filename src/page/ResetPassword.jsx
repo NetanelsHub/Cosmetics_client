@@ -13,14 +13,15 @@ function ResetPassword() {
     const {
         setIsLogIn,
         setShowModelProfile,
-        setShowDropdownMenu,
       } = useContext(globalContext);
+      const navigate = useNavigate();
+
 
   const query = new URLSearchParams(location.search);
   const token = query.get("token")
   const id = query.get("uid")
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   async function handleSubmit(e){
     e.preventDefault();
@@ -32,17 +33,13 @@ function ResetPassword() {
   }
 
 async function ResetPasswordClient(password){
-  const navigate = useNavigate();
-
     try {
      const { data } = await axios.post(`${url}?token=${token}&uid=${id}`,{ password });
      if(data.success){
       navigate("/home")
         setIsLogIn(true)
         // if user not valid he will go to catch and we open login in model
-       
         setShowModelProfile(true)
-      
      }
     } catch (error) {
       console.log(error);

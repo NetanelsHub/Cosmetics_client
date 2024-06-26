@@ -13,6 +13,8 @@ function Paypal() {
   const navigate = useNavigate()
 
   const createOrder = async (data) => {
+    await addOrderDb();
+
     // Order is created on the server and the order id is returned
     const response = await axios({
       url: "http://localhost:3000/payment/create-order",
@@ -28,7 +30,11 @@ function Paypal() {
     // console.log(response.data);
 
     return response.data.orderId;
+
+
   };
+
+
 
   const onApprove = async (data) => {
     try {
@@ -48,9 +54,10 @@ function Paypal() {
       if (response.data.status === "COMPLETED") {
         console.log("Payment process is complete.");
 
-        await addOrderDb();
+        // await addOrderDb();
         // clear seeson local state crtgt state order info
         localStorage.clear("shoppingList")
+        sessionStorage.clear("totalPrice")
         setShoppingList([])
         setPurchaseOrderInfo({})
 
@@ -79,9 +86,12 @@ function Paypal() {
       console.log("Order added to database successfully.");
       return data;
     } catch (error) {
-      // console.error("An error occurred while adding the product:", error);
-    }
+      console.error("An error occurred while adding the order:", error);
+      throw error; // Throw the error to handle it in createOrder
+          }
   }
+
+
 
   return (
     <div className="flex justify-center items-center w-full text-white">

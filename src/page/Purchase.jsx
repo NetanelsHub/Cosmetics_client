@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import FieldMy from "../component/common/FieldMy";
@@ -6,8 +6,7 @@ import { globalContext } from "../utils/GlobalContext";
 import { shoppingContext } from "../utils/ShoppingContext";
 import { useNavigate } from "react-router-dom";
 import Bill from "../component/common/Bill";
-
-const url = "http://localhost:3000/orders";
+import AutoComplete from "../component/common/AutoComplete";
 
 const validationSchema = Yup.object({
   client_phone: Yup.string().required("Phone number is required"),
@@ -23,21 +22,51 @@ export default function Purchase() {
   const { clientInfo } = useContext(globalContext);
   const { shoppingList, totalPrice, setPurchaseOrderInfo } = useContext(shoppingContext);
   const navigate = useNavigate();
+  const [address, setAddress] = useState({ city: "", street: "", building: "" });
+  const [phone, setPhone] = useState("");
+  const [apartment, setApartment] = useState("");
 
   const storedClientInfo = JSON.parse(sessionStorage.getItem("clientInfo")) || {};
+
+  useEffect(() => {
+    const storedPhone = sessionStorage.getItem("client_phone") || "";
+    const storedApartment = sessionStorage.getItem("client_address.apartment") || "";
+    const storedAddress = JSON.parse(sessionStorage.getItem("client_address")) || { city: "", street: "", building: "" };
+
+    setPhone(storedPhone);
+    setApartment(storedApartment);
+    setAddress(storedAddress);
+  }, []);
 
   const initialValues = {
     client_fName: clientInfo?.client_fName || storedClientInfo?.client_fName || "",
     client_lName: clientInfo?.client_lName || storedClientInfo?.client_lName || "",
     client_email: clientInfo?.client_email || storedClientInfo?.client_email || "",
     total_price: totalPrice,
-    client_phone: "",
+    client_phone: phone,
     client_address: {
-      city: "",
-      street: "",
-      building: "",
-      apartment: "",
+      city: address.city || "",
+      street: address.street || "",
+      building: address.building || "",
+      apartment: apartment,
     },
+  };
+
+  const handlePhoneChange = (event) => {
+    const { value } = event.target;
+    setPhone(value);
+    sessionStorage.setItem("client_phone", value);
+  };
+
+  const handleApartmentChange = (event) => {
+    const { value } = event.target;
+    setApartment(value);
+    sessionStorage.setItem("client_address.apartment", value);
+  };
+
+  const handlePlaceSelected = (place) => {
+    setAddress(place);
+    sessionStorage.setItem("client_address", JSON.stringify(place));
   };
 
   function handleSubmitPurchaseInfo(values) {
@@ -65,10 +94,9 @@ export default function Purchase() {
   }
 
   return (
-    <div className=" mt-6 mb-6 w-auto h-auto min-h-screen flex items-center justify-center">
-      
+    <div className="mt-6 mb-6 w-auto h-auto min-h-screen flex items-center justify-center">
       <div className="w-full max-w-4xl h-auto flex flex-col p-8 bg-white rounded-lg shadow dark:border dark:bg-gray-800 dark:border-gray-700">
-      <div className=" mb-12">
+        <div className="mb-12">
           <Bill />
         </div>
         <div className="flex-grow overflow-auto">
@@ -80,6 +108,7 @@ export default function Purchase() {
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmitPurchaseInfo}
+            enableReinitialize
           >
             <Form className="space-y-6">
               <div className="flex flex-col md:flex-row md:space-x-6">
@@ -105,37 +134,22 @@ export default function Purchase() {
                     readOnly
                     className="bg-gray-200 cursor-not-allowed"
                   />
+                </div>
+                <div className="flex-1 space-y-4">
                   <FieldMy
                     name="client_phone"
                     type="tel"
                     placeholder="*Phone"
-                    className="bg-gray-100"
+                    className="bg-gray-100 p-2.5 border border-gray-300 rounded-lg"
+                    onChange={handlePhoneChange}
                   />
-                </div>
-                <div className="flex-1 space-y-6">
-                  <FieldMy
-                    name="client_address.city"
-                    type="text"
-                    placeholder="*City"
-                    className="bg-gray-100"
-                  />
-                  <FieldMy
-                    name="client_address.street"
-                    type="text"
-                    placeholder="*Street"
-                    className="bg-gray-100"
-                  />
-                  <FieldMy
-                    name="client_address.building"
-                    type="text"
-                    placeholder="*Building"
-                    className="bg-gray-100"
-                  />
+                  <AutoComplete onPlaceSelected={handlePlaceSelected} />
                   <FieldMy
                     name="client_address.apartment"
                     type="text"
                     placeholder="*Apartment"
-                    className="bg-gray-100"
+                    className="bg-gray-100 p-2.5 border border-gray-300 rounded-lg"
+                    onChange={handleApartmentChange}
                   />
                 </div>
               </div>
@@ -147,11 +161,8 @@ export default function Purchase() {
               </button>
             </Form>
           </Formik>
-        
         </div>
-        
       </div>
-     
     </div>
   );
 }

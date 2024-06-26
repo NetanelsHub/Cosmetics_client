@@ -4,7 +4,7 @@ import Li from "../common/Li";
 import { FaShoppingCart, FaUser, FaEnvelope, FaHome } from "react-icons/fa"; // Imported FaHome icon
 import { globalContext } from "../../utils/GlobalContext";
 import { shoppingContext } from "../../utils/ShoppingContext";
-import logo from "../../assets/ImageToStl.com_sinleidftnkhskxvtjy1 (1).webp";
+import logo from "../../assets/Logo.webp";
 
 
 import ClearDataButton from "../../development_component/ClearDataButton";
@@ -140,9 +140,9 @@ function Nav() {
                 <p className="pl-10">Hello {finalClientName}</p>
 
                 {/* need to delete */}
-                <Li className="mr-0">
+                {/* <Li className="mr-0">
                   <ClearDataButton className="mr-0" />
-                </Li>
+                </Li> */}
               </ul>
               {/* end upper nav bar */}
             </div>
